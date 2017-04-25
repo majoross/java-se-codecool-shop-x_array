@@ -34,11 +34,11 @@ public class ShoppingCartDaoMem implements ShoppingCartDao {
     }// add item to cart, which is the DATA list of products
 
     @Override
-    public void remove(int id) {
-        DATA.remove(find(id));
+    public void remove(Product product) {
+        DATA.remove(product);
     }
 
-    public void review(int id) { /*redirect to Shopping cart main page*/ }
+    //public void review(int id) { /*redirect to Shopping cart main page*/ }
 
     @Override
     public Product find(int id) {

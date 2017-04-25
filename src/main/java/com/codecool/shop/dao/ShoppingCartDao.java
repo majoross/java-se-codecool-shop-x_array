@@ -10,7 +10,7 @@ public interface ShoppingCartDao {
     //EDIT FEATURE - Add more of a certain item or remove upon clicking the associated button
     void add(Product product);
 
-    void remove(int id);
+    void remove(Product product);
 
     //view shopping cart all products listed
     //void review(ShoppingCart cart);

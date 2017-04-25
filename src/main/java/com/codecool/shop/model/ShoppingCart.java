@@ -6,10 +6,10 @@ public class ShoppingCart {
     private int id;
     private String status;
 
-    public ShoppingCart(String status) {
+    public ShoppingCart() {
 
         this.id = (int) (Math.random() * 10000);
-        this.status = status;
+        this.status = "New";
 
     }
 
