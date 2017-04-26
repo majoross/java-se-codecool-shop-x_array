@@ -48,7 +48,6 @@ public class ProductController {
         int targetId;
 
         //finding supplier/category id with :name
-
         for (ProductCategory cat : productCategoryDataStore.getAll()) {
             if (targetName.equals(cat.getName())) {
                 targetId = cat.getId();
@@ -64,11 +63,11 @@ public class ProductController {
 
         //filling up the filtered list from either supplier or category
 
-        if (supplierToFilter != null) {
+        if (supplierToFilter.getName().equals(targetName)) {
 
             filteredProducts = supplierToFilter.getProducts();
 
-        } else if (categoryToFilter != null) {
+        } else if (categoryToFilter.getName().equals(targetName)) {
 
             filteredProducts = categoryToFilter.getProducts();
         }
