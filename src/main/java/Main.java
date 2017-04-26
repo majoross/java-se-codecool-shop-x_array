@@ -1,13 +1,19 @@
-import static spark.Spark.*;
-import static spark.debug.DebugScreen.enableDebugScreen;
-
 import com.codecool.shop.controller.ProductController;
-import com.codecool.shop.dao.*;
-import com.codecool.shop.dao.implementation.*;
-import com.codecool.shop.model.*;
+import com.codecool.shop.dao.ProductCategoryDao;
+import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
+import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.model.Product;
+import com.codecool.shop.model.ProductCategory;
+import com.codecool.shop.model.Supplier;
 import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
+
+import static spark.Spark.*;
+import static spark.debug.DebugScreen.enableDebugScreen;
 
 public class Main {
 
@@ -31,17 +37,15 @@ public class Main {
            return new ThymeleafTemplateEngine().render( ProductController.renderProducts(req, res) );
         });
 
-        get("/tablet", (Request req, Response res) -> {
-            return new ThymeleafTemplateEngine().render( ProductController.renderTablets(req, res) );
+        get("/supplier/:name", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render( ProductController.renderProductsBySupplier(req, res) );
         });
 
-        get("/phone", (Request req, Response res) -> {
-            return new ThymeleafTemplateEngine().render( ProductController.renderPhones(req, res) );
+        get("/category/:name", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render( ProductController.renderProductsByCategory(req, res) );
         });
 
-        get("/laptop", (Request req, Response res) -> {
-            return new ThymeleafTemplateEngine().render( ProductController.renderLaptops(req, res) );
-        });
+
 
 
 
