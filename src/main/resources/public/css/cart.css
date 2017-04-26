@@ -39,10 +39,7 @@
 {
     padding: 9px 9px 0px 9px;
 }
-.item.list-group-item:nth-of-type(odd)
-{
-    background: #eeeeee;
-}
+
 
 .item.list-group-item:before, .item.list-group-item:after
 {
@@ -81,3 +78,33 @@
 a, h4 {
     display: inline;
 }
+
+table {
+    width: 100%;
+}
+td{
+    height: 50px;
+    width: 50px;
+    text-align: center;
+}
+
+th{
+    text-align: center;
+    vertical-align: middle;
+    padding: 12px 12px 12px 12px;
+
+}
+
+.cart {
+
+    margin-bottom: 20px;
+
+}
+
+.bttn {
+    width: 20px !important;
+}
+
+
+
+

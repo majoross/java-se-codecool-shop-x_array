@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class ShoppingCartDaoMem implements ShoppingCartDao {
 
-    //List to store items in the cart??
+    //List to store items in the cart
     private List<Product> DATA = new ArrayList<>();
 
     //initially there are no shopping cart instances
@@ -31,6 +31,7 @@ public class ShoppingCartDaoMem implements ShoppingCartDao {
     public void add(Product product) {
         product.setId(DATA.size() + 1);
         DATA.add(product);
+//        System.out.println(DATA);
     }// add item to cart, which is the DATA list of products
 
     @Override

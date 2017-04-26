@@ -24,11 +24,20 @@ public class ProductController {
     public static ModelAndView renderProducts(Request req, Response res) {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        ShoppingCartDao shoppingCartDataStore = ShoppingCartDaoMem.getInstance();
+
+        System.out.println(productDataStore);
+        System.out.println(productCategoryDataStore);
+
+        for (Product prod : shoppingCartDataStore.getAll()) {
+            System.out.println(prod);
+        }
 
 
         Map params = new HashMap<>();
         params.put("category", productCategoryDataStore.find(1));
         params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
+        params.put("cart", shoppingCartDataStore.getAll());
 
         return new ModelAndView(params, "product/index");
     }

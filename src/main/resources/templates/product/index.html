@@ -25,12 +25,20 @@
             crossorigin="anonymous"></script>
 
     <link rel="stylesheet" type="text/css" href="/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
 </head>
 
 <body>
 
 <div class="jumbotron text-center">
     <h1>Codecool Shop</h1>
+    <i class=" fa fa-shopping-cart" id="cart" aria-hidden="true"></i>
+    <!--<script type="text/javascript">-->
+        <!--document.getElementById("#cart").onclick = function () {-->
+            <!--location.href = "/cart";-->
+        <!--};-->
+    <!--</script>-->
 </div>
 
 <div class="container">
@@ -51,7 +59,7 @@
                             <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                         </div>
                         <div class="col-xs-12 col-md-6">
-                            <a class="btn btn-success" href="#">Add to cart</a>
+                            <a class="btn btn-success" th:action="${cart.add(prod)}">Add to cart</a>
                         </div>
                     </div>
                 </div>

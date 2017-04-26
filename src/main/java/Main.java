@@ -35,6 +35,9 @@ public class Main {
         //Shopping Cart
         get("/cart", ProductController::renderCart, new ThymeleafTemplateEngine());
 
+//        //Add to cart
+//        post("/index"), ProductController::renderProducts, new ThymeleafTemplateEngine());
+
         // Add this line to your project to enable the debug screen
         enableDebugScreen();
     }
@@ -71,9 +74,9 @@ public class Main {
         productDataStore.add(hpPavilion);
 
         ShoppingCart cart1 = new ShoppingCart();
-        shoppingCartDataStore.add(fire);
-        shoppingCartDataStore.add(ideaPad);
-        //shoppingCartDataStore.add(fireHD);
+//        shoppingCartDataStore.add(fire);
+//        shoppingCartDataStore.add(ideaPad);
+//        shoppingCartDataStore.add(fireHD);
         //shoppingCartDataStore.add(hpPavilion);
 
     }
