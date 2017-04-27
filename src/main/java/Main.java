@@ -38,11 +38,11 @@ public class Main {
         });
 
         get("/supplier/:name", (Request req, Response res) -> {
-            return new ThymeleafTemplateEngine().render( ProductController.renderProductsBySupplier(req, res) );
+            return new ThymeleafTemplateEngine().render( ProductController.renderProductsFilteredBySupplier(req, res) );
         });
 
         get("/category/:name", (Request req, Response res) -> {
-            return new ThymeleafTemplateEngine().render( ProductController.renderProductsByCategory(req, res) );
+            return new ThymeleafTemplateEngine().render( ProductController.renderProductsFilteredByCategory(req, res) );
         });
 
 
@@ -86,7 +86,6 @@ public class Main {
         productDataStore.add(new Product("Iphone 7", 700,"USD", "imagine calling your girl with an apple", phone, apple));
         productDataStore.add(new Product("Phab 2 Pro", 500, "USD", "buy it to be phabolous", phone, lenovo));
         productDataStore.add(new Product("Amazon Fire Phone", 450, "USD", "i did not even know that amazon has its own electronic devices...that sums it up", phone, amazon));
-
 
 
     }

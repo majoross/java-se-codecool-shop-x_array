@@ -15,48 +15,46 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ProductController {
-    private static ProductDaoMem productDataStore;
-    private static ProductCategoryDao productCategoryDataStore;
-    private static SupplierDao supplierDataStore;
-    private static Map params;
+    private static ProductDaoMem productDataStore = ProductDaoMem.getInstance();
+    private static ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+    private static SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
+    private static ProductCategory categoryToFilter;
+    private static Supplier supplierToFilter;
 
-    //rendering all products
+
     public static ModelAndView renderProducts(Request req, Response res) {
-        productDataStore = ProductDaoMem.getInstance();
-        productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        supplierDataStore = SupplierDaoMem.getInstance();
 
-        params = new HashMap<>();
+        Map params = new HashMap<>();
         params.put("categories", productCategoryDataStore.getAll());
         params.put("products", productDataStore.getAll());
         params.put("suppliers", supplierDataStore.getAll());
         return new ModelAndView(params, "product/index");
     }
 
-    //rendering products based on category
-    public static ModelAndView renderProductsByCategory(Request req, Response res) {
-        productDataStore = ProductDaoMem.getInstance();
-        productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        supplierDataStore = SupplierDaoMem.getInstance();
-        String categoryName = req.params(":name");
-        ProductCategory categoryToFilter = productCategoryDataStore.find(categoryName);
+    public static ModelAndView renderProductsFilteredByCategory(Request req, Response res) {
 
-        params = new HashMap<>();
+        for (ProductCategory cat : productCategoryDataStore.getAll()) {
+            if (req.params(":name").equals(cat.getName())) {
+                categoryToFilter = productCategoryDataStore.find(cat.getId());
+            }
+        }
+
+        Map params = new HashMap<>();
         params.put("categories", productCategoryDataStore.getAll());
-        params.put("products", productDataStore.getBy(categoryToFilter));
+        params.put("products", categoryToFilter.getProducts());
         params.put("suppliers", supplierDataStore.getAll());
         return new ModelAndView(params, "product/index");
     }
 
-    //rendering products based on supplier
-    public static ModelAndView renderProductsBySupplier(Request req, Response res) {
-        productDataStore = ProductDaoMem.getInstance();
-        productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        supplierDataStore = SupplierDaoMem.getInstance();
-        String supplierName = req.params(":name");
-        Supplier supplierToFilter = supplierDataStore.find(supplierName);
+    public static ModelAndView renderProductsFilteredBySupplier(Request req, Response res) {
 
-        params = new HashMap<>();
+        for (Supplier sup : supplierDataStore.getAll()) {
+            if (req.params(":name").equals(sup.getName())) {
+                supplierToFilter = supplierDataStore.find(sup.getId());
+            }
+        }
+
+        Map params = new HashMap<>();
         params.put("categories", productCategoryDataStore.getAll());
         params.put("products", productDataStore.getBy(supplierToFilter));
         params.put("suppliers", supplierDataStore.getAll());
