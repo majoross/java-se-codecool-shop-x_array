@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="utf-8"/>
+    <meta name="author" content="Codecool"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title>Shopping Cart</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"/>
+
+
+    <link rel="stylesheet" type="text/css" href="/css/cart.css"/>
+
+
+</head>
+<body>
+
+<div class="jumbotron text-center">
+    <h1>Codecool Shop</h1>
+    <a href="/"><button class="glyphicon glyphicon-home"></button></a>
+</div>
+
+<div class="container">
+    <div class="well well-sm">
+        <strong>Shopping Cart</strong>
+    </div>
+
+    <div id="products" class="row list-group">
+        <div class="cart">
+        <table>
+
+                <tr>
+                    <td> </td>
+                    <td><b>Item ID</b></td>
+                    <td><b> </b></td>
+                    <td><b>Name</b></td>
+                    <td><b>Price</b></td>
+                    <td class="bttn"> </td>
+                    <td class="bttn"><b>Quantity</b></td>
+                    <td class="bttn"> </td>
+                    <td><b>Total Cost</b></td>
+                </tr>
+                <tr class="item" th:each="prod,iterStat : ${cart}">
+                    <td><a class="btn btn-success remove" th:href="'/cart/remove/' + ${prod.id}">Remove</a></td>
+                    <td th:text="${prod.id}">ID</td>
+                    <td><img class="group list-group-image" src="http://placehold.it/400x250/000/fff"
+                             th:attr="src='/img/product_' + ${prod.id} + '.jpg'" alt=""/></td>
+                    <td th:text="${prod.name}">name</td>
+                    <td th:text="${prod.getPrice()}">price</td>
+                    <td class="bttn"><a class="btn btn-success" th:href="'/cart1/' + ${prod.id}">+</a></td>
+                    <td class="quantity bttn" th:text="${prod.quantity}"></td>
+                    <td class="bttn"><a class="btn btn-success" th:href="'/cart-1/' + ${prod.id}">-</a></td>
+                    <td class="total cost">100</td>
+
+
+                </tr>
+
+
+
+        </table>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="footer :: copy"></div>
+
+</body>
+</html>
