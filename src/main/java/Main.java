@@ -35,15 +35,15 @@ public class Main {
 
         // Equivalent with above
         get("/index", (Request req, Response res) -> {
-           return new ThymeleafTemplateEngine().render( ProductController.renderProducts(req, res) );
+            return new ThymeleafTemplateEngine().render(ProductController.renderProducts(req, res));
         });
 
         get("/supplier/:name", (Request req, Response res) -> {
-            return new ThymeleafTemplateEngine().render( ProductController.renderProductsFilteredBySupplier(req, res) );
+            return new ThymeleafTemplateEngine().render(ProductController.renderProductsFilteredBySupplier(req, res));
         });
 
         get("/category/:name", (Request req, Response res) -> {
-            return new ThymeleafTemplateEngine().render( ProductController.renderProductsFilteredByCategory(req, res) );
+            return new ThymeleafTemplateEngine().render(ProductController.renderProductsFilteredByCategory(req, res));
         });
 
         //Shopping Cart
@@ -53,7 +53,7 @@ public class Main {
         get("/add/:id", (Request req, Response res) -> {
 
             Product product = ProductDaoMem.getInstance().find(Integer.parseInt(req.params(":id")));
-            LineItem item = new LineItem(product,1);
+            LineItem item = new LineItem(product, 1);
             ShoppingCartDaoMem.getInstance().add(item);
 
             return new ThymeleafTemplateEngine().render(ProductController.renderProducts(req, res));
@@ -112,10 +112,10 @@ public class Main {
         productDataStore.add(new Product("Amazon Fire", 49.9f, "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon));
         productDataStore.add(new Product("Lenovo IdeaPad Miix 700", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet, lenovo));
         productDataStore.add(new Product("Amazon Fire HD 8", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon));
-        productDataStore.add(new Product("Dell Vostro", 600, "USD","Dell Vostro is a line of computers from Dell aimed at the small businesses. In 2013, this line discontinued on some Dell websites but continued to be offered in other markets, such as Malaysia.", laptop, dell));
-        productDataStore.add(new Product("Macbook Pro", 1500, "USD", "its more than a book trust me",laptop, apple));
+        productDataStore.add(new Product("Dell Vostro", 600, "USD", "Dell Vostro is a line of computers from Dell aimed at the small businesses. In 2013, this line discontinued on some Dell websites but continued to be offered in other markets, such as Malaysia.", laptop, dell));
+        productDataStore.add(new Product("Macbook Pro", 1500, "USD", "its more than a book trust me", laptop, apple));
         productDataStore.add(new Product("Lenovo", 800, "USD", "yo wassup im out of ideas", laptop, lenovo));
-        productDataStore.add(new Product("Iphone 7", 700,"USD", "imagine calling your girl with an apple", phone, apple));
+        productDataStore.add(new Product("Iphone 7", 700, "USD", "imagine calling your girl with an apple", phone, apple));
         productDataStore.add(new Product("Phab 2 Pro", 500, "USD", "buy it to be phabolous", phone, lenovo));
         productDataStore.add(new Product("Amazon Fire Phone", 450, "USD", "i did not even know that amazon has its own electronic devices...that sums it up", phone, amazon));
 

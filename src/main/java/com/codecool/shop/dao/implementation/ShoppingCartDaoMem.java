@@ -8,7 +8,6 @@ import java.util.List;
 
 
 public class ShoppingCartDaoMem implements ShoppingCartDao {
-    private int totalmoneyses;
 
     //List to store items in the cart
     private List<LineItem> DATA = new ArrayList<>();
@@ -57,15 +56,6 @@ public class ShoppingCartDaoMem implements ShoppingCartDao {
 
     @Override
     public LineItem getFirst() {return DATA.stream().findFirst().orElse(null);}
-
-    @Override
-    public int total() {
-
-        for (LineItem item : DATA) {
-             totalmoneyses+=item.getTotalPrice();}
-
-        return totalmoneyses;
-    }
 
 }
 

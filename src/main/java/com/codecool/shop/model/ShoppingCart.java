@@ -13,14 +13,6 @@ public class ShoppingCart {
 
     }
 
-//    public int total(){
-//
-//        for (Product prod : ShoppingCartDaoMem.getInstance().getAll()) {
-//            totalcost += prod.subtotal();
-//        }
-//        return totalcost;
-//    }
-
     public int getId() { return id; }
 
     public String getStatus() { return status; }
