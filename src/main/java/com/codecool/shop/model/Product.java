@@ -19,7 +19,6 @@ public class Product extends BaseModel {
         this.quantity = 1;
     }
 
-
     public int amount(int num){
         quantity += num;
         if(quantity < 1){

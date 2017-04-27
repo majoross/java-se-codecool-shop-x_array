@@ -1,6 +1,7 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.ProductCategoryDao;
+import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.ShoppingCartDao;
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
@@ -64,6 +65,7 @@ public class ProductController {
         return new ModelAndView(params, "product/index");
     }
 
+
     public static ModelAndView renderCart(Request req, Response res) {
 
         Map params = new HashMap<>();
@@ -71,4 +73,6 @@ public class ProductController {
         params.put("cart", shoppingCartDataStore.getAll());
         return new ModelAndView(params, "product/cart");
     }
+
 }
+

@@ -2,14 +2,17 @@ import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.ShoppingCartDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.ShoppingCartDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.dao.implementation.ShoppingCartDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.ShoppingCart;
 import com.codecool.shop.model.Supplier;
+import com.codecool.shop.model.ShoppingCart;
 import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
@@ -34,6 +37,7 @@ public class Main {
 
         // Always add generic routes to the end
         get("/", ProductController::renderProducts, new ThymeleafTemplateEngine());
+
         // Equivalent with above
         get("/index", (Request req, Response res) -> {
            return new ThymeleafTemplateEngine().render( ProductController.renderProducts(req, res) );
@@ -47,6 +51,17 @@ public class Main {
             return new ThymeleafTemplateEngine().render( ProductController.renderProductsFilteredByCategory(req, res) );
         });
 
+        //Shopping Cart
+        get("/cart", ProductController::renderCart, new ThymeleafTemplateEngine());
+
+        //Add to cart
+        get("/add/:id", (Request req, Response res) -> {
+
+            Product product = ProductDaoMem.getInstance().find(Integer.parseInt(req.params(":id")));
+            ShoppingCartDaoMem.getInstance().add(product);
+
+            return new ThymeleafTemplateEngine().render(ProductController.renderProducts(req, res));
+        });
 
         //Shopping Cart
         get("/cart", ProductController::renderCart, new ThymeleafTemplateEngine());
@@ -64,6 +79,7 @@ public class Main {
             Product product = ShoppingCartDaoMem.getInstance().find(Integer.parseInt(req.params(":id")));
             product.amount(1);
             return new ThymeleafTemplateEngine().render(ProductController.renderCart(req, res));
+
         });
 
         get("/cart-1/:id", (Request req, Response res) -> {
@@ -81,7 +97,18 @@ public class Main {
 
 
 
+        get("/cart-1/:id", (Request req, Response res) -> {
+            Product product = ShoppingCartDaoMem.getInstance().find(Integer.parseInt(req.params(":id")));
+            product.amount(-1);
+            return new ThymeleafTemplateEngine().render(ProductController.renderCart(req, res));
+        });
 
+        get("/cart/remove/:id", (Request req, Response res) -> {
+            Product product = ShoppingCartDaoMem.getInstance().find(Integer.parseInt(req.params(":id")));
+            ShoppingCartDaoMem.getInstance().remove(product);
+            product.setQuantity(1);
+            return new ThymeleafTemplateEngine().render(ProductController.renderCart(req, res));
+        });
 
         // Add this line to your project to enable the debug screen
         enableDebugScreen();
@@ -92,6 +119,7 @@ public class Main {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
+        ShoppingCartDao shoppingCartDataStore = ShoppingCartDaoMem.getInstance();
 
         //setting up a new supplier
         Supplier amazon = new Supplier("Amazon", "Digital content and services");
@@ -123,6 +151,7 @@ public class Main {
 
         //setting up shopping cart
         ShoppingCart cart1 = new ShoppingCart();
+
 
     }
 

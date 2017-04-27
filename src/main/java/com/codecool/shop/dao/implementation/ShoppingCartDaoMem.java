@@ -5,6 +5,7 @@ import com.codecool.shop.model.Product;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ShoppingCartDaoMem implements ShoppingCartDao {
 
@@ -55,7 +56,5 @@ public class ShoppingCartDaoMem implements ShoppingCartDao {
         return DATA;
     }
 
-
-
-
 }
+
