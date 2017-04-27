@@ -95,14 +95,9 @@ public class Main {
         productDataStore.add(ideaPad);
         Product fireHD = new Product("Amazon Fire HD 8", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon);
         productDataStore.add(fireHD);
-        Product hpPavilion = new Product("HP Pavilion 5", 110, "USD", "HP's Pavilion product line's latest sensation", tablet, hp);
-        productDataStore.add(hpPavilion);
 
         ShoppingCart cart1 = new ShoppingCart();
-//        shoppingCartDataStore.add(fire);
-//        shoppingCartDataStore.add(ideaPad);
-//        shoppingCartDataStore.add(fireHD);
-        //shoppingCartDataStore.add(hpPavilion);
+
 
     }
 
