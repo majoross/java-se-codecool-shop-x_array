@@ -97,7 +97,9 @@ public class Main {
         productDataStore.add(fireHD);
 
         ShoppingCart cart1 = new ShoppingCart();
-
+//        shoppingCartDataStore.add(fire);
+//        shoppingCartDataStore.add(ideaPad);
+//        shoppingCartDataStore.add(fireHD);
 
     }
 
