@@ -15,7 +15,9 @@ public class Product extends BaseModel {
         this.setPrice(defaultPrice, currencyString);
         this.setSupplier(supplier);
         this.setProductCategory(productCategory);
+
     }
+
 
     public float getDefaultPrice() {
         return defaultPrice;
