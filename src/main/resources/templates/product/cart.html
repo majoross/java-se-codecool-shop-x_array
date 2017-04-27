@@ -57,11 +57,14 @@
                     <td class="bttn"><a class="btn btn-success" th:href="'/cart1/' + ${prod.id}">+</a></td>
                     <td class="quantity bttn" th:text="${prod.quantity}"></td>
                     <td class="bttn"><a class="btn btn-success" th:href="'/cart-1/' + ${prod.id}">-</a></td>
-                    <td class="total cost">100</td>
+                    <td class="total cost" th:text="${prod.subtotal()}">100</td>
 
 
                 </tr>
         </table>
+            <div>
+                <h1 >Total: </h1>
+            </div>
         </div>
     </div>
 
