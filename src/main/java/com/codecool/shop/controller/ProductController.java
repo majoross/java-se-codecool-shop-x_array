@@ -1,9 +1,11 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.ProductCategoryDao;
+import com.codecool.shop.dao.ShoppingCartDao;
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.dao.implementation.ShoppingCartDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
@@ -18,6 +20,7 @@ public class ProductController {
     private static ProductDaoMem productDataStore = ProductDaoMem.getInstance();
     private static ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
     private static SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
+    private static ShoppingCartDao shoppingCartDataStore = ShoppingCartDaoMem.getInstance();
     private static ProductCategory categoryToFilter;
     private static Supplier supplierToFilter;
 
@@ -59,5 +62,13 @@ public class ProductController {
         params.put("products", productDataStore.getBy(supplierToFilter));
         params.put("suppliers", supplierDataStore.getAll());
         return new ModelAndView(params, "product/index");
+    }
+
+    public static ModelAndView renderCart(Request req, Response res) {
+
+        Map params = new HashMap<>();
+        params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
+        params.put("cart", shoppingCartDataStore.getAll());
+        return new ModelAndView(params, "product/cart");
     }
 }
