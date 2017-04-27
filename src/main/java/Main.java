@@ -1,18 +1,13 @@
 import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.ShoppingCartDao;
+import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.ShoppingCartDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
-import com.codecool.shop.dao.implementation.ShoppingCartDaoMem;
-import com.codecool.shop.model.Product;
-import com.codecool.shop.model.ProductCategory;
-import com.codecool.shop.model.ShoppingCart;
-import com.codecool.shop.model.Supplier;
-import com.codecool.shop.model.ShoppingCart;
+import com.codecool.shop.model.*;
 import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
@@ -58,57 +53,32 @@ public class Main {
         get("/add/:id", (Request req, Response res) -> {
 
             Product product = ProductDaoMem.getInstance().find(Integer.parseInt(req.params(":id")));
-            ShoppingCartDaoMem.getInstance().add(product);
-
-            return new ThymeleafTemplateEngine().render(ProductController.renderProducts(req, res));
-        });
-
-        //Shopping Cart
-        get("/cart", ProductController::renderCart, new ThymeleafTemplateEngine());
-
-        //Add to cart
-        get("/add/:id", (Request req, Response res) -> {
-
-            Product product = ProductDaoMem.getInstance().find(Integer.parseInt(req.params(":id")));
-            ShoppingCartDaoMem.getInstance().add(product);
+            LineItem item = new LineItem(product,1);
+            ShoppingCartDaoMem.getInstance().add(item);
 
             return new ThymeleafTemplateEngine().render(ProductController.renderProducts(req, res));
         });
 
         get("/cart1/:id", (Request req, Response res) -> {
-            Product product = ShoppingCartDaoMem.getInstance().find(Integer.parseInt(req.params(":id")));
-            product.amount(1);
+            LineItem item = ShoppingCartDaoMem.getInstance().find(Integer.parseInt(req.params(":id")));
+            item.changeAmount(1);
             return new ThymeleafTemplateEngine().render(ProductController.renderCart(req, res));
 
         });
 
         get("/cart-1/:id", (Request req, Response res) -> {
-            Product product = ShoppingCartDaoMem.getInstance().find(Integer.parseInt(req.params(":id")));
-            product.amount(-1);
+            LineItem item = ShoppingCartDaoMem.getInstance().find(Integer.parseInt(req.params(":id")));
+            item.changeAmount(-1);
             return new ThymeleafTemplateEngine().render(ProductController.renderCart(req, res));
         });
 
         get("/cart/remove/:id", (Request req, Response res) -> {
-            Product product = ShoppingCartDaoMem.getInstance().find(Integer.parseInt(req.params(":id")));
-            ShoppingCartDaoMem.getInstance().remove(product);
-            product.setQuantity(1);
+            LineItem item = ShoppingCartDaoMem.getInstance().find(Integer.parseInt(req.params(":id")));
+            ShoppingCartDaoMem.getInstance().remove(item);
+            item.setQuantity(1);
             return new ThymeleafTemplateEngine().render(ProductController.renderCart(req, res));
         });
 
-
-
-        get("/cart-1/:id", (Request req, Response res) -> {
-            Product product = ShoppingCartDaoMem.getInstance().find(Integer.parseInt(req.params(":id")));
-            product.amount(-1);
-            return new ThymeleafTemplateEngine().render(ProductController.renderCart(req, res));
-        });
-
-        get("/cart/remove/:id", (Request req, Response res) -> {
-            Product product = ShoppingCartDaoMem.getInstance().find(Integer.parseInt(req.params(":id")));
-            ShoppingCartDaoMem.getInstance().remove(product);
-            product.setQuantity(1);
-            return new ThymeleafTemplateEngine().render(ProductController.renderCart(req, res));
-        });
 
         // Add this line to your project to enable the debug screen
         enableDebugScreen();

@@ -1,7 +1,5 @@
 package com.codecool.shop.model;
 
-import com.codecool.shop.dao.implementation.ShoppingCartDaoMem;
-
 import java.util.Currency;
 
 public class Product extends BaseModel {
@@ -10,7 +8,6 @@ public class Product extends BaseModel {
     private Currency defaultCurrency;
     private ProductCategory productCategory;
     private Supplier supplier;
-    public int quantity;
 
 
     public Product(String name, float defaultPrice, String currencyString, String description, ProductCategory productCategory, Supplier supplier) {
@@ -18,26 +15,9 @@ public class Product extends BaseModel {
         this.setPrice(defaultPrice, currencyString);
         this.setSupplier(supplier);
         this.setProductCategory(productCategory);
-        this.quantity = 1;
+
     }
 
-    public int amount(int num){
-        quantity += num;
-        if(quantity < 1){
-            ShoppingCartDaoMem.getInstance().remove(this);
-        }
-
-        return quantity;
-    }
-
-    public int subtotal(){
-        int subt = Math.round(this.getDefaultPrice()) * this.quantity;
-        return subt;
-    }
-
-    public int getQuantity() { return quantity; }
-
-    public void setQuantity(int quantity) { this.quantity = quantity; }
 
     public float getDefaultPrice() {
         return defaultPrice;
