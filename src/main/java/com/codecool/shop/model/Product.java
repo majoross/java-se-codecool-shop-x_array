@@ -8,7 +8,7 @@ public class Product extends BaseModel {
     private Currency defaultCurrency;
     private ProductCategory productCategory;
     private Supplier supplier;
-    private int quantity;
+    public int quantity;
 
 
     public Product(String name, float defaultPrice, String currencyString, String description, ProductCategory productCategory, Supplier supplier) {
@@ -17,6 +17,15 @@ public class Product extends BaseModel {
         this.setSupplier(supplier);
         this.setProductCategory(productCategory);
         this.quantity = 1;
+    }
+
+    public int amount(int num){
+        quantity += num;
+        if(quantity < 1){
+            quantity = 1;
+        }
+
+        return quantity;
     }
 
     public int getQuantity() { return quantity; }

@@ -25,6 +25,7 @@
 
 <div class="jumbotron text-center">
     <h1>Codecool Shop</h1>
+    <a href="/"><button class="glyphicon glyphicon-home"></button></a>
 </div>
 
 <div class="container">
@@ -48,15 +49,15 @@
                     <td><b>Total Cost</b></td>
                 </tr>
                 <tr class="item" th:each="prod,iterStat : ${cart}">
-                    <td><a class="btn btn-success remove">Remove</a></td>
+                    <td><a class="btn btn-success remove" th:href="'/cart/remove/' + ${prod.id}">Remove</a></td>
                     <td th:text="${prod.id}">ID</td>
                     <td><img class="group list-group-image" src="http://placehold.it/400x250/000/fff"
                              th:attr="src='/img/product_' + ${prod.id} + '.jpg'" alt=""/></td>
                     <td th:text="${prod.name}">name</td>
                     <td th:text="${prod.getPrice()}">price</td>
-                    <td class="bttn"><a class="btn btn-success" href="#">+</a></td>
-                    <td class="quantity bttn" th:text="${prod.quantity}">2</td>
-                    <td class="bttn"><a class="btn btn-success" href="#">-</a></td>
+                    <td class="bttn"><a class="btn btn-success" th:href="'/cart1/' + ${prod.id}">+</a></td>
+                    <td class="quantity bttn" th:text="${prod.quantity}"></td>
+                    <td class="bttn"><a class="btn btn-success" th:href="'/cart-1/' + ${prod.id}">-</a></td>
                     <td class="total cost">100</td>
 
 
