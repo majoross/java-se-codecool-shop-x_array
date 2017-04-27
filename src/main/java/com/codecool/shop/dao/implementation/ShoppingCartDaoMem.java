@@ -29,8 +29,13 @@ public class ShoppingCartDaoMem implements ShoppingCartDao {
 
     @Override
     public void add(Product product) {
-        product.setId(DATA.size() + 1);
-        DATA.add(product);
+//        product.setId(DATA.size());
+        if(DATA.contains(product)){
+            product.amount(1);
+        }
+        else {
+            DATA.add(product);
+        }
 //        System.out.println(DATA);
     }// add item to cart, which is the DATA list of products
 

@@ -44,6 +44,25 @@ public class Main {
             return new ThymeleafTemplateEngine().render(ProductController.renderProducts(req, res));
         });
 
+        get("/cart1/:id", (Request req, Response res) -> {
+            Product product = ShoppingCartDaoMem.getInstance().find(Integer.parseInt(req.params(":id")));
+            product.amount(1);
+            return new ThymeleafTemplateEngine().render(ProductController.renderCart(req, res));
+                });
+
+        get("/cart-1/:id", (Request req, Response res) -> {
+            Product product = ShoppingCartDaoMem.getInstance().find(Integer.parseInt(req.params(":id")));
+            product.amount(-1);
+            return new ThymeleafTemplateEngine().render(ProductController.renderCart(req, res));
+        });
+
+        get("/cart/remove/:id", (Request req, Response res) -> {
+            Product product = ShoppingCartDaoMem.getInstance().find(Integer.parseInt(req.params(":id")));
+            ShoppingCartDaoMem.getInstance().remove(product);
+            product.setQuantity(1);
+            return new ThymeleafTemplateEngine().render(ProductController.renderCart(req, res));
+        });
+
         // Add this line to your project to enable the debug screen
         enableDebugScreen();
     }
