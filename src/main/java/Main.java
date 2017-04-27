@@ -1,13 +1,22 @@
-import static spark.Spark.*;
-import static spark.debug.DebugScreen.enableDebugScreen;
-
 import com.codecool.shop.controller.ProductController;
-import com.codecool.shop.dao.*;
-import com.codecool.shop.dao.implementation.*;
-import com.codecool.shop.model.*;
+import com.codecool.shop.dao.ProductCategoryDao;
+import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.ShoppingCartDao;
+import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
+import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.dao.implementation.ShoppingCartDaoMem;
+import com.codecool.shop.model.Product;
+import com.codecool.shop.model.ProductCategory;
+import com.codecool.shop.model.Supplier;
+import com.codecool.shop.model.ShoppingCart;
 import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
+
+import static spark.Spark.*;
+import static spark.debug.DebugScreen.enableDebugScreen;
 
 public class Main {
 
@@ -30,6 +39,14 @@ public class Main {
         // Equivalent with above
         get("/index", (Request req, Response res) -> {
            return new ThymeleafTemplateEngine().render( ProductController.renderProducts(req, res) );
+        });
+
+        get("/supplier/:name", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render( ProductController.renderProductsFilteredBySupplier(req, res) );
+        });
+
+        get("/category/:name", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render( ProductController.renderProductsFilteredByCategory(req, res) );
         });
 
         //Shopping Cart
@@ -79,27 +96,32 @@ public class Main {
         supplierDataStore.add(amazon);
         Supplier lenovo = new Supplier("Lenovo", "Computers");
         supplierDataStore.add(lenovo);
-        Supplier hp = new Supplier("HP", "Laptops");
-        supplierDataStore.add(hp);
+        Supplier apple = new Supplier("Apple", "not for lunch");
+        supplierDataStore.add(apple);
+        Supplier dell = new Supplier("Dell", "Like doll but with an e");
 
         //setting up a new product category
         ProductCategory tablet = new ProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
-        ProductCategory laptop = new ProductCategory("Laptop", "Hardware", "A laptop computer is a portable computer with a built-in keyboard");
+        ProductCategory laptop = new ProductCategory("Laptop", "Hardware", "A laptop, often called a notebook or notebook computer, is a small, portable personal computer with a clamshell form factor, an alphanumeric keyboard on the lower part of the clamshell and a thin LCD or LED computer screen on the upper portion, which is opened up to use the computer.");
+        ProductCategory phone = new ProductCategory("Phone", "Hardware", "A mobile phone is a portable telephone that can make and receive calls over a radio frequency link while the user is moving within a telephone service area.");
         productCategoryDataStore.add(tablet);
         productCategoryDataStore.add(laptop);
+        productCategoryDataStore.add(phone);
 
         //setting up products and printing it
-        Product fire = new Product("Amazon Fire", 49.9f, "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon);
-        productDataStore.add(fire);
-        Product ideaPad = new Product("Lenovo IdeaPad Miix 700", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet, lenovo);
-        productDataStore.add(ideaPad);
-        Product fireHD = new Product("Amazon Fire HD 8", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon);
-        productDataStore.add(fireHD);
+        productDataStore.add(new Product("Amazon Fire", 49.9f, "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon));
+        productDataStore.add(new Product("Lenovo IdeaPad Miix 700", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet, lenovo));
+        productDataStore.add(new Product("Amazon Fire HD 8", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon));
+        productDataStore.add(new Product("Dell Vostro", 600, "USD","Dell Vostro is a line of computers from Dell aimed at the small businesses. In 2013, this line discontinued on some Dell websites but continued to be offered in other markets, such as Malaysia.", laptop, dell));
+        productDataStore.add(new Product("Macbook Pro", 1500, "USD", "its more than a book trust me",laptop, apple));
+        productDataStore.add(new Product("Lenovo", 800, "USD", "yo wassup im out of ideas", laptop, lenovo));
+        productDataStore.add(new Product("Iphone 7", 700,"USD", "imagine calling your girl with an apple", phone, apple));
+        productDataStore.add(new Product("Phab 2 Pro", 500, "USD", "buy it to be phabolous", phone, lenovo));
+        productDataStore.add(new Product("Amazon Fire Phone", 450, "USD", "i did not even know that amazon has its own electronic devices...that sums it up", phone, amazon));
 
+        //setting up shopping cart
         ShoppingCart cart1 = new ShoppingCart();
-//        shoppingCartDataStore.add(fire);
-//        shoppingCartDataStore.add(ideaPad);
-//        shoppingCartDataStore.add(fireHD);
+
 
     }
 
