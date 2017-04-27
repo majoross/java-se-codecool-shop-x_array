@@ -38,11 +38,11 @@ public class Main {
         });
 
         get("/supplier/:name", (Request req, Response res) -> {
-            return new ThymeleafTemplateEngine().render( ProductController.renderProductsWithFilter(req, res) );
+            return new ThymeleafTemplateEngine().render( ProductController.renderProductsFilteredBySupplier(req, res) );
         });
 
         get("/category/:name", (Request req, Response res) -> {
-            return new ThymeleafTemplateEngine().render( ProductController.renderProductsWithFilter(req, res) );
+            return new ThymeleafTemplateEngine().render( ProductController.renderProductsFilteredByCategory(req, res) );
         });
 
 
