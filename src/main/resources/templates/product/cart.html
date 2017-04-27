@@ -55,7 +55,7 @@
                     <td th:text="${prod.name}">name</td>
                     <td th:text="${prod.getPrice()}">price</td>
                     <td class="bttn"><a class="btn btn-success" href="#">+</a></td>
-                    <td class="quantity bttn">2</td>
+                    <td class="quantity bttn" th:text="${prod.quantity}">2</td>
                     <td class="bttn"><a class="btn btn-success" href="#">-</a></td>
                     <td class="total cost">100</td>
 
