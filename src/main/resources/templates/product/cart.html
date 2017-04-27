@@ -18,6 +18,7 @@
 
 
     <link rel="stylesheet" type="text/css" href="/css/cart.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"/>
 
 
 </head>
@@ -66,8 +67,9 @@
                 </tr>
             </table>
             <div>
-                <h1>Total amount of potatoes: </h1>
-                <h1 th:text="${ShopCart.getSumOfAll()}+' '+ ${ShopCart.getDefaultCurrency()}">0 </h1>
+                <h3>Total amount: </h3>
+                <p th:text="${ShopCart.getSumOfAll()}+' '+ ${ShopCart.getDefaultCurrency()}">0 </p>
+                <h3><a class="btn btn-success remove">Proceed to Checkout</a></h3>
             </div>
         </div>
     </div>
