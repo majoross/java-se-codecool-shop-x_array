@@ -8,6 +8,7 @@ import java.util.List;
 
 
 public class ShoppingCartDaoMem implements ShoppingCartDao {
+    private boolean isThere;
 
     //List to store items in the cart
     private List<LineItem> DATA = new ArrayList<>();
@@ -28,14 +29,18 @@ public class ShoppingCartDaoMem implements ShoppingCartDao {
 
     @Override
     public void add(LineItem item) {
-        if(DATA.contains(item)){
-            item.changeAmount(1);
+        isThere = false;
+        for (LineItem data : DATA) {
+            if (item.getProductId() == data.getProductId()){
+                data.changeAmount(1);
+                isThere = true;
+            }
         }
-        else {
+
+        if (isThere==false){
             DATA.add(item);
         }
-//        System.out.println(DATA);
-    }// add item to cart, which is the DATA list of products
+    }
 
     @Override
     public void remove(LineItem item) {
