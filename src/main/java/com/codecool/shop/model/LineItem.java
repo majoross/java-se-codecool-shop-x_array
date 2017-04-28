@@ -66,7 +66,8 @@ public class LineItem {
     }
 
     public int getSumOfAll() {
-        return sumOfAll;
+         return sumOfAll;
+
     }
 
     public Currency getDefaultCurrency() {
