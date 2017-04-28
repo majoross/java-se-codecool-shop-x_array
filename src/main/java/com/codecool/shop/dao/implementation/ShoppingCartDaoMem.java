@@ -57,5 +57,14 @@ public class ShoppingCartDaoMem implements ShoppingCartDao {
     @Override
     public LineItem getFirst() {return DATA.stream().findFirst().orElse(null);}
 
+    public String getTotal() {
+        LineItem item = DATA.stream().findFirst().orElse(null);
+        if (item != null) {
+            return String.format("%d %s", item.getSumOfAll(),item.getDefaultCurrency());
+        }else {
+            return "0 USD";
+        }
+    }
+
 }
 

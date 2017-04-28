@@ -19,5 +19,6 @@ public interface ShoppingCartDao {
     //A list with all products in the cart
     List<LineItem> getAll();
 
+    String getTotal();
 }
 

@@ -70,7 +70,7 @@ public class ProductController {
         Map params = new HashMap<>();
         params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
         params.put("cart", shoppingCartDataStore.getAll());
-        params.put("ShopCart", shoppingCartDataStore.getFirst());
+        params.put("TotalPrice", shoppingCartDataStore.getTotal());
         return new ModelAndView(params, "product/cart");
     }
 
