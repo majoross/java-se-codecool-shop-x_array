@@ -125,53 +125,53 @@ public class Main {
 
     }
 
-    public static void populateDataDatabase() {
-        SupplierDao supplierJdbc = SupplierDaoJDBC.getInstance();
-        ProductCategoryDao productCategoryJdbc = ProductCategoryDaoJDBC.getInstance();
-        ProductDao productDaoJdbc = ProductDaoJDBC.getInstance();
-        ShoppingCartDao shoppingCart = ShoppingCartDaoJDBC.getInstance();
-//        ProductDao productDataStore = ProductDaoMem.getInstance();
-//        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-//        SupplierDaoMem supplierDataStore = SupplierDaoMem.getInstance();
-//        ShoppingCartDao shoppingCartDataStore = ShoppingCartDaoMem.getInstance();
-
-        //setting up a new supplier
-        Supplier amazon = new Supplier("Amazon", "Digital content and services");
-        supplierJdbc.add(amazon);
-        Supplier lenovo = new Supplier("Lenovo", "Computers");
-        supplierJdbc.add(lenovo);
-        Supplier apple = new Supplier("Apple", "not for lunch");
-        supplierJdbc.add(apple);
-        Supplier dell = new Supplier("Dell", "Like doll but with an e");
-
-        //setting up a new product category
-        ProductCategory tablet = new ProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
-        ProductCategory laptop = new ProductCategory("Laptop", "Hardware", "A laptop, often called a notebook or notebook computer, is a small, portable personal computer with a clamshell form factor, an alphanumeric keyboard on the lower part of the clamshell and a thin LCD or LED computer screen on the upper portion, which is opened up to use the computer.");
-        ProductCategory phone = new ProductCategory("Phone", "Hardware", "A mobile phone is a portable telephone that can make and receive calls over a radio frequency link while the user is moving within a telephone service area.");
-        productCategoryJdbc.add(tablet);
-        productCategoryJdbc.add(laptop);
-        productCategoryJdbc.add(phone);
-
-        //setting up products and printing it
-        productDaoJdbc.add(new Product("Amazon Fire", 49.9f, "USD", "Fantastic price. Good parental controls.", tablet, amazon));
-        productDaoJdbc.add(new Product("Lenovo IdeaPad Miix 700", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor.", tablet, lenovo));
-        productDaoJdbc.add(new Product("Amazon Fire HD 8", 89, "USD", "Amazon's latest Fire HD 8. Great value for media consumption.", tablet, amazon));
-        productDaoJdbc.add(new Product("Dell Vostro", 600, "USD", "Dell Vostro is a line of computers from Dell.", laptop, dell));
-        productDaoJdbc.add(new Product("Macbook Pro", 1500, "USD", "its more than a book trust me", laptop, apple));
-        productDaoJdbc.add(new Product("Lenovo", 800, "USD", "yo wassup im out of ideas", laptop, lenovo));
-        productDaoJdbc.add(new Product("Iphone 7", 700, "USD", "imagine calling your girl with an apple", phone, apple));
-        productDaoJdbc.add(new Product("Phab 2 Pro", 500, "USD", "buy it to be phabolous", phone, lenovo));
-        productDaoJdbc.add(new Product("Amazon Fire Phone", 450, "USD", "amazon has its own electronic devices!!!", phone, amazon));
-        Product product = new Product("Amazon Fire", 49.9f, "USD", "Fantastic price. Good parental controls.", tablet, amazon);
-        Product product1 = new Product("Lenovo IdeaPad Miix 700", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor.", tablet, lenovo);
-        System.out.println(product.getId());
-        System.out.println(product1.getId());
-
-        //setting up shopping cart
-        ShoppingCart cart1 = new ShoppingCart();
-
-
-    }
+//    public static void populateDataDatabase() {
+//        SupplierDao supplierJdbc = SupplierDaoJDBC.getInstance();
+//        ProductCategoryDao productCategoryJdbc = ProductCategoryDaoJDBC.getInstance();
+//        ProductDao productDaoJdbc = ProductDaoJDBC.getInstance();
+//        ShoppingCartDao shoppingCart = ShoppingCartDaoJDBC.getInstance();
+////        ProductDao productDataStore = ProductDaoMem.getInstance();
+////        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+////        SupplierDaoMem supplierDataStore = SupplierDaoMem.getInstance();
+////        ShoppingCartDao shoppingCartDataStore = ShoppingCartDaoMem.getInstance();
+//
+//        //setting up a new supplier
+//        Supplier amazon = new Supplier("Amazon", "Digital content and services");
+//        supplierJdbc.add(amazon);
+//        Supplier lenovo = new Supplier("Lenovo", "Computers");
+//        supplierJdbc.add(lenovo);
+//        Supplier apple = new Supplier("Apple", "not for lunch");
+//        supplierJdbc.add(apple);
+//        Supplier dell = new Supplier("Dell", "Like doll but with an e");
+//
+//        //setting up a new product category
+//        ProductCategory tablet = new ProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
+//        ProductCategory laptop = new ProductCategory("Laptop", "Hardware", "A laptop, often called a notebook or notebook computer, is a small, portable personal computer with a clamshell form factor, an alphanumeric keyboard on the lower part of the clamshell and a thin LCD or LED computer screen on the upper portion, which is opened up to use the computer.");
+//        ProductCategory phone = new ProductCategory("Phone", "Hardware", "A mobile phone is a portable telephone that can make and receive calls over a radio frequency link while the user is moving within a telephone service area.");
+//        productCategoryJdbc.add(tablet);
+//        productCategoryJdbc.add(laptop);
+//        productCategoryJdbc.add(phone);
+//
+//        //setting up products and printing it
+//        productDaoJdbc.add(new Product("Amazon Fire", 49.9f, "USD", "Fantastic price. Good parental controls.", tablet, amazon));
+//        productDaoJdbc.add(new Product("Lenovo IdeaPad Miix 700", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor.", tablet, lenovo));
+//        productDaoJdbc.add(new Product("Amazon Fire HD 8", 89, "USD", "Amazon's latest Fire HD 8. Great value for media consumption.", tablet, amazon));
+//        productDaoJdbc.add(new Product("Dell Vostro", 600, "USD", "Dell Vostro is a line of computers from Dell.", laptop, dell));
+//        productDaoJdbc.add(new Product("Macbook Pro", 1500, "USD", "its more than a book trust me", laptop, apple));
+//        productDaoJdbc.add(new Product("Lenovo", 800, "USD", "yo wassup im out of ideas", laptop, lenovo));
+//        productDaoJdbc.add(new Product("Iphone 7", 700, "USD", "imagine calling your girl with an apple", phone, apple));
+//        productDaoJdbc.add(new Product("Phab 2 Pro", 500, "USD", "buy it to be phabolous", phone, lenovo));
+//        productDaoJdbc.add(new Product("Amazon Fire Phone", 450, "USD", "amazon has its own electronic devices!!!", phone, amazon));
+//        Product product = new Product("Amazon Fire", 49.9f, "USD", "Fantastic price. Good parental controls.", tablet, amazon);
+//        Product product1 = new Product("Lenovo IdeaPad Miix 700", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor.", tablet, lenovo);
+//        System.out.println(product.getId());
+//        System.out.println(product1.getId());
+//
+//        //setting up shopping cart
+//        ShoppingCart cart1 = new ShoppingCart();
+//
+//
+//    }
 
 
 }
