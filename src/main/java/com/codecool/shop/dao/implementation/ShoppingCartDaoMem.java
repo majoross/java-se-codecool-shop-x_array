@@ -1,16 +1,17 @@
 package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.dao.ShoppingCartDao;
-import com.codecool.shop.model.Product;
+import com.codecool.shop.model.LineItem;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 public class ShoppingCartDaoMem implements ShoppingCartDao {
+    private boolean isThere;
 
     //List to store items in the cart
-    private List<Product> DATA = new ArrayList<>();
+    private List<LineItem> DATA = new ArrayList<>();
 
     //initially there are no shopping cart instances
     private static ShoppingCartDaoMem instance = null;
@@ -22,38 +23,52 @@ public class ShoppingCartDaoMem implements ShoppingCartDao {
     public static ShoppingCartDaoMem getInstance() {
         if (instance == null) {
             instance = new ShoppingCartDaoMem();
-            System.out.println("shopping cart instance created");
         }
         return instance;
     }
 
     @Override
-    public void add(Product product) {
-//        product.setId(DATA.size());
-        if(DATA.contains(product)){
-            product.amount(1);
+    public void add(LineItem item) {
+        isThere = false;
+        for (LineItem data : DATA) {
+            if (item.getProductId() == data.getProductId()){
+                data.changeAmount(1);
+                isThere = true;
+            }
         }
-        else {
-            DATA.add(product);
+
+        if (isThere==false){
+            DATA.add(item);
         }
-//        System.out.println(DATA);
-    }// add item to cart, which is the DATA list of products
+    }
 
     @Override
-    public void remove(Product product) {
-        DATA.remove(product);
+    public void remove(LineItem item) {
+        DATA.remove(item);
     }
 
     //public void review(int id) { /*redirect to Shopping cart main page*/ }
 
     @Override
-    public Product find(int id) {
+    public LineItem find(int id) {
         return DATA.stream().filter(t -> t.getId() == id).findFirst().orElse(null);
     }
 
     @Override
-    public List<Product> getAll() {
+    public List<LineItem> getAll() {
         return DATA;
+    }
+
+    @Override
+    public LineItem getFirst() {return DATA.stream().findFirst().orElse(null);}
+
+    public String getTotal() {
+        LineItem item = DATA.stream().findFirst().orElse(null);
+        if (item != null) {
+            return String.format("%d %s", item.getSumOfAll(),item.getDefaultCurrency());
+        }else {
+            return "0 USD";
+        }
     }
 
 }

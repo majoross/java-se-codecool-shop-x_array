@@ -1,21 +1,24 @@
 package com.codecool.shop.dao;
 
-import com.codecool.shop.model.Product;
-import com.codecool.shop.model.ShoppingCart;
+import com.codecool.shop.model.LineItem;
+
 import java.util.List;
 
 public interface ShoppingCartDao {
 
     //EDIT FEATURE - Add more of a certain item or remove upon clicking the associated button
-    void add(Product product);
+    void add(LineItem item);
 
-    void remove(Product product);
+    void remove(LineItem item);
 
     //Find an item(Product class is called) by ID
-    Product find(int id);
+    LineItem find(int id);
+
+    LineItem getFirst();
 
     //A list with all products in the cart
-    List<Product> getAll();
+    List<LineItem> getAll();
 
+    String getTotal();
 }
 
