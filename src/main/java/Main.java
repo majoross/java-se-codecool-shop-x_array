@@ -2,15 +2,20 @@ import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.ShoppingCartDao;
-import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
+
+import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.dao.implementation.ShoppingCartDaoMem;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
-import com.codecool.shop.model.*;
+import com.codecool.shop.model.Product;
+import com.codecool.shop.model.ProductCategory;
+import com.codecool.shop.model.ShoppingCart;
+import com.codecool.shop.model.Supplier;
+import com.codecool.shop.model.ShoppingCart;
+
 import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
+
+import javax.management.AttributeList;
 
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
@@ -88,7 +93,7 @@ public class Main {
     }
 
     public static void populateData() {
-
+        ProductDaoJdbc productDaoJdbc = new ProductDaoJdbc();
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
@@ -112,15 +117,17 @@ public class Main {
         productCategoryDataStore.add(phone);
 
         //setting up products and printing it
-        productDataStore.add(new Product("Amazon Fire", 49.9f, "USD", "Fantastic price. Good parental controls.", tablet, amazon));
-        productDataStore.add(new Product("Lenovo IdeaPad Miix 700", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor.", tablet, lenovo));
-        productDataStore.add(new Product("Amazon Fire HD 8", 89, "USD", "Amazon's latest Fire HD 8. Great value for media consumption.", tablet, amazon));
-        productDataStore.add(new Product("Dell Vostro", 600, "USD", "Dell Vostro is a line of computers from Dell.", laptop, dell));
-        productDataStore.add(new Product("Macbook Pro", 1500, "USD", "its more than a book trust me", laptop, apple));
-        productDataStore.add(new Product("Lenovo", 800, "USD", "yo wassup im out of ideas", laptop, lenovo));
-        productDataStore.add(new Product("Iphone 7", 700, "USD", "imagine calling your girl with an apple", phone, apple));
-        productDataStore.add(new Product("Phab 2 Pro", 500, "USD", "buy it to be phabolous", phone, lenovo));
-        productDataStore.add(new Product("Amazon Fire Phone", 450, "USD", "amazon has its own electronic devices!!!", phone, amazon));
+
+        productDaoJdbc.add(new Product("Amazon Fire", 49.9f, "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon));
+        productDaoJdbc.add(new Product("Lenovo IdeaPad Miix 700", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet, lenovo));
+        productDaoJdbc.add(new Product("Amazon Fire HD 8", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon));
+        productDaoJdbc.add(new Product("Dell Vostro", 600, "USD","Dell Vostro is a line of computers from Dell aimed at the small businesses. In 2013, this line discontinued on some Dell websites but continued to be offered in other markets, such as Malaysia.", laptop, dell));
+        productDaoJdbc.add(new Product("Macbook Pro", 1500, "USD", "its more than a book trust me",laptop, apple));
+        productDaoJdbc.add(new Product("Lenovo", 800, "USD", "yo wassup im out of ideas", laptop, lenovo));
+        productDaoJdbc.add(new Product("Iphone 7", 700,"USD", "imagine calling your girl with an apple", phone, apple));
+        productDaoJdbc.add(new Product("Phab 2 Pro", 500, "USD", "buy it to be phabolous", phone, lenovo));
+        productDaoJdbc.add(new Product("Amazon Fire Phone", 450, "USD", "i did not even know that amazon has its own electronic devices...that sums it up", phone, amazon));
+
 
         //setting up shopping cart
         ShoppingCart cart1 = new ShoppingCart();
