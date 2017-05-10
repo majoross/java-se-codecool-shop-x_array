@@ -1,4 +1,4 @@
-INSERT INTO categories (id, name, department, description)
+INSERT INTO categories (id, category_name, department, description)
 VALUES
   (1,'Tablet', 'Hardware',
    'A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.'),
@@ -7,14 +7,14 @@ VALUES
   (3, 'Phone', 'Hardware',
    'A mobile phone is a portable telephone that can make and receive calls over a radio frequency link while the user is moving within a telephone service area.');
 
-INSERT INTO suppliers(id,name,description)
+INSERT INTO suppliers(id,supplier_name,description)
 VALUES
   (1,'Amazon','Digital content and services'),
   (2,'Lenovo','Computers'),
   (3,'Apple','not for lunch'),
   (4,'Dell','Like doll but with an e');
 
-INSERT INTO products (name, default_price, currency_string, description, category_id, supplier_id)
+INSERT INTO products (product_name, default_price, currency_string, description, category_id, supplier_id)
 VALUES
   ('Amazon Fire', 49.9, 'USD', 'Fantastic price. Large content ecosystem. Good parental controls.', 1, 1),
   ('Lenovo IdeaPad Miix 700',479,'USD','Keyboard cover is included. Fanless Core m5 processor.',1,2),
