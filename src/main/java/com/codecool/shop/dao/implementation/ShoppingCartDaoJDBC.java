@@ -1,13 +1,14 @@
 package com.codecool.shop.dao.implementation;
 
 
+import com.codecool.shop.dao.JDBC;
 import com.codecool.shop.dao.ShoppingCartDao;
 import com.codecool.shop.model.LineItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShoppingCartDaoJDBC implements ShoppingCartDao{
+public class ShoppingCartDaoJDBC extends JDBC implements ShoppingCartDao{
     private boolean isThere;
 
     //initially there are no shopping cart instances

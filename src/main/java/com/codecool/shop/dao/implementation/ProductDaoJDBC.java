@@ -1,4 +1,5 @@
 package com.codecool.shop.dao.implementation;
+import com.codecool.shop.dao.JDBC;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
@@ -7,11 +8,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductDaoJDBC implements ProductDao {
+public class ProductDaoJDBC extends JDBC implements ProductDao {
     private static ProductDaoJDBC instance = null;
-    private static final String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
-    private static final String DB_USER = "adam_kovacs";
-    private static final String DB_PASSWORD = "postgres";
+
     /* A private Constructor prevents any other class from instantiating.
      */
     private ProductDaoJDBC() {
@@ -95,21 +94,4 @@ public class ProductDaoJDBC implements ProductDao {
         return productsFromDB;
     }
 
-    private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(
-                DATABASE,
-                DB_USER,
-                DB_PASSWORD);
-    }
-
-    private void executeQuery(String query) {
-        try (Connection connection = getConnection();
-             Statement statement = connection.createStatement();
-        ){
-            statement.execute(query);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }

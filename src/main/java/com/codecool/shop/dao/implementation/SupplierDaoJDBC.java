@@ -1,13 +1,14 @@
 package com.codecool.shop.dao.implementation;
 
 
+import com.codecool.shop.dao.JDBC;
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.model.Supplier;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SupplierDaoJDBC implements SupplierDao {
+public class SupplierDaoJDBC extends JDBC implements SupplierDao {
     private static SupplierDaoJDBC instance = null;
 
     /* A private Constructor prevents any other class from instantiating.
