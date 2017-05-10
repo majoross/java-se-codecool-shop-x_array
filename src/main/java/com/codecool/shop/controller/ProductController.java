@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ProductController {
-//    private static ProductDao productDataStore = ProductDaoMem.getInstance();
+    //    private static ProductDao productDataStore = ProductDaoMem.getInstance();
 //    private static ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
 //    private static SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
 //    private static ShoppingCartDao shoppingCartDataStore = ShoppingCartDaoMem.getInstance();
@@ -46,7 +46,7 @@ public class ProductController {
 
         Map params = new HashMap<>();
         params.put("categories", productCategoryDataStore.getAll());
-        params.put("products", categoryToFilter.getProducts());
+        params.put("products", productDataStore.getBy(categoryToFilter));
         params.put("suppliers", supplierDataStore.getAll());
         return new ModelAndView(params, "product/index");
     }

@@ -36,13 +36,13 @@ public class ProductCategoryDaoJDBC extends JDBC implements ProductCategoryDao {
 
     @Override
     public ProductCategory find(int id) {
-        String query = "SELECT * FROM categories WHERE category_id = '"+ id +"' ;";
+        String query = "SELECT * FROM categories WHERE category_id = '" + id + "' ;";
 
         try (Connection connection = getConnection();
-             Statement statement =connection.createStatement();
+             Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query);
-        ){
-            if (resultSet.next()){
+        ) {
+            if (resultSet.next()) {
                 return new ProductCategory(
                         resultSet.getInt("category_id"),
                         resultSet.getString("category_name"),
@@ -62,7 +62,7 @@ public class ProductCategoryDaoJDBC extends JDBC implements ProductCategoryDao {
 
     @Override
     public void remove(int id) {
-        String query = "DELETE FROM categories WHERE category_id = '" + id +"';";
+        String query = "DELETE FROM categories WHERE category_id = '" + id + "';";
         executeQuery(query);
     }
 
@@ -72,10 +72,10 @@ public class ProductCategoryDaoJDBC extends JDBC implements ProductCategoryDao {
         String query = "SELECT * FROM categories;";
 
         try (Connection connection = getConnection();
-             Statement statement =connection.createStatement();
+             Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query);
-        ){
-            while (resultSet.next()){
+        ) {
+            while (resultSet.next()) {
                 ProductCategory category = new ProductCategory(
                         resultSet.getInt("category_id"),
                         resultSet.getString("category_name"),

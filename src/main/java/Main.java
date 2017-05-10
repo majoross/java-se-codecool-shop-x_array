@@ -16,38 +16,37 @@ public class Main {
 
     public static void main(String[] args) {
 
-        ProductDao pd = ProductDaoJDBC.getInstance();
-        ProductCategoryDao pdc = ProductCategoryDaoJDBC.getInstance();
-        ProductCategory tablet = new ProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
-        Supplier amazon = new Supplier(1,"Amazon", "Digital content and services");
-        ProductCategory laptop = new ProductCategory(2,"Laptop", "Hardware", "A laptop, often called a notebook or notebook computer, is a small, portable personal computer with a clamshell form factor, an alphanumeric keyboard on the lower part of the clamshell and a thin LCD or LED computer screen on the upper portion, which is opened up to use the computer.");
-        Product productape = new Product(1,"Amazon Fire", 49.9f, "USD", "Fantastic price. Good parental controls.", tablet, amazon);
-        LineItem lineItem = new LineItem(productape,1);
-        ShoppingCartDao spct = ShoppingCartDaoJDBC.getInstance();
-        SupplierDao supp = SupplierDaoJDBC.getInstance();
-        System.out.println(pd.getAll());
-        System.out.println(pd.getBy(amazon));
-        System.out.println(pd.getBy(laptop));
-        System.out.println(pdc.find(1));
-        System.out.println(pdc.getAll());
-        spct.add(lineItem);
-        System.out.println(spct.find(1));
-        System.out.println(spct.getAll());
-        System.out.println(spct.getTotal());
-        System.out.println(supp.getAll());
+//        ProductDao pd = ProductDaoJDBC.getInstance();
+//        ProductCategoryDao pdc = ProductCategoryDaoJDBC.getInstance();
+//        ProductCategory tablet = new ProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
+//        Supplier amazon = new Supplier(1,"Amazon", "Digital content and services");
+//        ProductCategory laptop = new ProductCategory(2,"Laptop", "Hardware", "A laptop, often called a notebook or notebook computer, is a small, portable personal computer with a clamshell form factor, an alphanumeric keyboard on the lower part of the clamshell and a thin LCD or LED computer screen on the upper portion, which is opened up to use the computer.");
+//        Product productape = new Product(1,"Amazon Fire", 49.9f, "USD", "Fantastic price. Good parental controls.", tablet, amazon);
+//        LineItem lineItem = new LineItem(productape,1);
+//        ShoppingCartDao spct = ShoppingCartDaoJDBC.getInstance();
+//        SupplierDao supp = SupplierDaoJDBC.getInstance();
+//        System.out.println(pd.getAll());
+//        System.out.println(pd.getBy(amazon));
+//        System.out.println(pd.getBy(laptop));
+//        System.out.println(pdc.find(1));
+//        System.out.println(pdc.getAll());
+//        spct.add(lineItem);
+//        System.out.println(spct.find(1));
+//        System.out.println(spct.getAll());
+//        System.out.println(spct.getTotal());
+//        System.out.println(supp.getAll());
 
-        //DAOMEM data handling
+        //MEM data handling
 //      ProductDao productDataStore = ProductDaoMem.getInstance();
 //      ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
 //      SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
 //      ShoppingCartDao shoppingCartDataStore = ShoppingCartDaoMem.getInstance();
+//      populateData();
 
         //JDBC data handling
         ProductDao productDataStore = ProductDaoJDBC.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoJDBC.getInstance();
-        SupplierDao supplierDataStore = SupplierDaoJDBC.getInstance();
         ShoppingCartDao shoppingCartDataStore = ShoppingCartDaoJDBC.getInstance();
-        //populateData();
+
 
         // default server settings
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
@@ -55,7 +54,7 @@ public class Main {
         port(8888);
 
         // populate some data for the memory storage
-        populateData();
+        //populateData();
 
         // Always start with more specific routes
         get("/hello", (req, res) -> "Hello World");

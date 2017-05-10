@@ -18,12 +18,12 @@ public class LineItem {
         this.product = product;
         this.id = product.getId();
         this.quantity = quantity;
-        this.subtotalPrice =  product.getDefaultPrice() * quantity;
+        this.subtotalPrice = product.getDefaultPrice() * quantity;
         this.sumOfAll += (int) product.getDefaultPrice() * quantity;
 
     }
 
-    public LineItem(int id , Product product, int quantity) {
+    public LineItem(int id, Product product, int quantity) {
         this.id = id;
         this.product = product;
         this.id = product.getId();
@@ -39,10 +39,12 @@ public class LineItem {
             ShoppingCartDaoMem.getInstance().remove(this);
         }
     }
+
     public float getSubtotalPrice() {
         return this.subtotalPrice;
     }
-    public float getProductDefaultPrice(){
+
+    public float getProductDefaultPrice() {
         return this.product.getDefaultPrice();
     }
 
@@ -83,7 +85,7 @@ public class LineItem {
     }
 
     public int getSumOfAll() {
-         return sumOfAll;
+        return sumOfAll;
 
     }
 

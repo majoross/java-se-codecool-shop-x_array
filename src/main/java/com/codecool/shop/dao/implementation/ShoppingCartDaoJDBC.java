@@ -13,14 +13,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShoppingCartDaoJDBC extends JDBC implements ShoppingCartDao{
-    private boolean isThere;
+public class ShoppingCartDaoJDBC extends JDBC implements ShoppingCartDao {
 
     //initially there are no shopping cart instances
     private static ShoppingCartDaoJDBC instance = null;
 
     //private constructor
-    private ShoppingCartDaoJDBC(){}
+    private ShoppingCartDaoJDBC() {
+    }
 
     //if there are no instances of cart, creates one
     public static ShoppingCartDaoJDBC getInstance() {
@@ -32,23 +32,24 @@ public class ShoppingCartDaoJDBC extends JDBC implements ShoppingCartDao{
 
     @Override
     public void add(LineItem item) {
+
         String query;
         if (find(item.getProductId()) == null) {
             query = "INSERT INTO shoppingcart( prod_id, quantity, subtotal_price,product_price)" +
                     "VALUES('" + item.getProductId() + "', '" + item.getQuantity() + "', '" + item.getSubtotalPrice() +
                     "', '" + item.getProductDefaultPrice() + "');";
-        }
-        else{
-            query = "UPDATE shoppingcart SET quantity = quantity + 1 WHERE prod_id = '" + item.getProductId() +"';" +
+        } else {
+            query = "UPDATE shoppingcart SET quantity = quantity + 1 WHERE prod_id = '" + item.getProductId() + "';" +
                     "UPDATE shoppingcart SET subtotal_price = product_price * quantity WHERE prod_id = '"
-                    + item.getProductId() +"';";
+                    + item.getProductId() + "';";
         }
         executeQuery(query);
     }
 
     @Override
     public void remove(LineItem item) {
-        String query = "DELETE FROM shoppingcart WHERE prod_id = '" + item.getProductId() +"';";
+
+        String query = "DELETE FROM shoppingcart WHERE prod_id = '" + item.getProductId() + "';";
         executeQuery(query);
     }
 
@@ -56,15 +57,16 @@ public class ShoppingCartDaoJDBC extends JDBC implements ShoppingCartDao{
 
     @Override
     public LineItem find(int id) {
+
         ProductDao product = ProductDaoJDBC.getInstance();
         String query = "SELECT * FROM shoppingcart INNER JOIN products " +
                 "ON shoppingcart.prod_id=products.product_id WHERE prod_id='" + id + "';";
 
         try (Connection connection = getConnection();
-             Statement statement =connection.createStatement();
+             Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query);
-        ){
-            if (resultSet.next()){
+        ) {
+            if (resultSet.next()) {
 
                 LineItem result = new LineItem(
                         resultSet.getInt("prod_id"),
@@ -85,7 +87,6 @@ public class ShoppingCartDaoJDBC extends JDBC implements ShoppingCartDao{
 
     @Override
     public List<LineItem> getAll() {
-        //get all lineitem objects from db (shopping cart table)
 
         Integer numberOfItems = 0;
         List<Integer> productIDs = new ArrayList<Integer>();
@@ -93,10 +94,10 @@ public class ShoppingCartDaoJDBC extends JDBC implements ShoppingCartDao{
 
         String query = "SELECT prod_id FROM shoppingcart;";
         try (Connection connection = getConnection();
-             Statement statement =connection.createStatement();
+             Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query);
-        ){
-            while (resultSet.next()){
+        ) {
+            while (resultSet.next()) {
                 numberOfItems = resultSet.getInt("prod_id");
                 productIDs.add(numberOfItems);
             }
@@ -105,7 +106,7 @@ public class ShoppingCartDaoJDBC extends JDBC implements ShoppingCartDao{
             e.printStackTrace();
         }
         System.out.println(productIDs);
-        for(Integer item : productIDs) {
+        for (Integer item : productIDs) {
             lineItemsFromDB.add(find(item));
         }
 
@@ -120,17 +121,17 @@ public class ShoppingCartDaoJDBC extends JDBC implements ShoppingCartDao{
 
     public String getTotal() {
         Float totalPrice;
-        String query= "SELECT SUM(subtotal_price) AS total_price FROM shoppingcart;";
-            try (Connection connection = getConnection();
-                 Statement statement =connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(query);
-                 ){
-                if (resultSet.next()){
+        String query = "SELECT SUM(subtotal_price) AS total_price FROM shoppingcart;";
+        try (Connection connection = getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query);
+        ) {
+            if (resultSet.next()) {
 
-                    totalPrice = resultSet.getFloat("total_price");
-                    return Float.toString(totalPrice);
-                } else {
-                    return null;
+                totalPrice = resultSet.getFloat("total_price");
+                return Float.toString(totalPrice);
+            } else {
+                return null;
             }
 
         } catch (SQLException e) {

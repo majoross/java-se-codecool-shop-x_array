@@ -29,20 +29,23 @@ public class SupplierDaoJDBC extends JDBC implements SupplierDao {
 
     @Override
     public void add(Supplier supplier) {
+
         String query = "INSERT INTO suppliers (supplier_id,supplier_name,supplier_description)" +
-                "VALUES ('" + supplier.getId() + "','" + supplier.getName() +"','"
+                "VALUES ('" + supplier.getId() + "','" + supplier.getName() + "','"
                 + supplier.getDescription() + "');";
-        executeQuery(query);    }
+        executeQuery(query);
+    }
 
     @Override
     public Supplier find(int id) {
-        String query = "SELECT * FROM suppliers WHERE supplier_id = '"+ id +"' ;";
+
+        String query = "SELECT * FROM suppliers WHERE supplier_id = '" + id + "' ;";
 
         try (Connection connection = getConnection();
-             Statement statement =connection.createStatement();
+             Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query);
-        ){
-            if (resultSet.next()){
+        ) {
+            if (resultSet.next()) {
                 return new Supplier(
                         resultSet.getInt("supplier_id"),
                         resultSet.getString("supplier_name"),
@@ -61,21 +64,23 @@ public class SupplierDaoJDBC extends JDBC implements SupplierDao {
 
     @Override
     public void remove(int id) {
-        String query = "DELETE FROM suppliers WHERE supplier_id = '" + id +"';";
+
+        String query = "DELETE FROM suppliers WHERE supplier_id = '" + id + "';";
         executeQuery(query);
     }
 
     @Override
     public List<Supplier> getAll() {
-        //get all suppliers from db as an arrayList
+
+
         List<Supplier> suppliersFromDB = new ArrayList<Supplier>();
         String query = "SELECT * FROM suppliers;";
 
         try (Connection connection = getConnection();
-             Statement statement =connection.createStatement();
+             Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query);
-        ){
-            while (resultSet.next()){
+        ) {
+            while (resultSet.next()) {
                 Supplier supplier = new Supplier(
                         resultSet.getInt("supplier_id"),
                         resultSet.getString("supplier_name"),

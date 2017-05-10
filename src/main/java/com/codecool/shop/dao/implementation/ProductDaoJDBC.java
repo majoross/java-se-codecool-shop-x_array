@@ -1,4 +1,5 @@
 package com.codecool.shop.dao.implementation;
+
 import com.codecool.shop.dao.JDBC;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.model.Product;
@@ -21,6 +22,7 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
     }
 
     public static ProductDaoJDBC getInstance() {
+
         if (instance == null) {
             instance = new ProductDaoJDBC();
         }
@@ -29,8 +31,9 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
 
     @Override
     public void add(Product product) {
+
         String query = "INSERT INTO products (product_id, product_name, default_price, currency_string, product_description, cat_id, supp_id)"
-                +"VALUES ('" + product.getId() + "', '" + product.getName() + "', '" + product.getDefaultPrice() + "', " +
+                + "VALUES ('" + product.getId() + "', '" + product.getName() + "', '" + product.getDefaultPrice() + "', " +
                 "'" + product.getDefaultCurrency() + "', '" + product.getDescription() + "', '" + product.getProductCategory() + "'" +
                 ", '" + product.getSupplier() + "');";
         executeQuery(query);
@@ -43,10 +46,10 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
                 "INNER JOIN categories ON products.cat_id=categories.category_id WHERE product_id ='" + id + "';";
 
         try (Connection connection = getConnection();
-             Statement statement =connection.createStatement();
+             Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query);
-        ){
-            if (resultSet.next()){
+        ) {
+            if (resultSet.next()) {
                 ProductCategory category = new ProductCategory(
                         resultSet.getInt("category_id"),
                         resultSet.getString("category_name"),
@@ -80,7 +83,8 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
 
     @Override
     public void remove(int id) {
-        String query = "DELETE FROM products WHERE product_id = '" + id +"';";
+
+        String query = "DELETE FROM products WHERE product_id = '" + id + "';";
         executeQuery(query);
     }
 
@@ -93,10 +97,10 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
 
         String query = "SELECT product_id FROM products;";
         try (Connection connection = getConnection();
-             Statement statement =connection.createStatement();
+             Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query);
-        ){
-            while (resultSet.next()){
+        ) {
+            while (resultSet.next()) {
                 numberOfProducts = resultSet.getInt("product_id");
                 productIDs.add(numberOfProducts);
             }
@@ -105,7 +109,7 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
             e.printStackTrace();
         }
         System.out.println(productIDs);
-        for(Integer prod : productIDs) {
+        for (Integer prod : productIDs) {
             productsFromDB.add(find(prod));
         }
 
@@ -114,16 +118,17 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
 
     @Override
     public List<Product> getBy(Supplier supplier) {
+
         List<Product> productsFromDB = new ArrayList<Product>();
         String query = "SELECT * FROM products INNER JOIN suppliers ON products.supp_id=suppliers.supplier_id" +
                 " INNER JOIN categories ON products.cat_id=categories.category_id " +
                 "WHERE supp_id='" + supplier.getId() + "';";
 
         try (Connection connection = getConnection();
-             Statement statement =connection.createStatement();
+             Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query);
-        ){
-            while (resultSet.next()){
+        ) {
+            while (resultSet.next()) {
                 ProductCategory category = new ProductCategory(
                         resultSet.getInt("category_id"),
                         resultSet.getString("category_name"),
@@ -150,16 +155,17 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
 
     @Override
     public List<Product> getBy(ProductCategory productCategory) {
+
         List<Product> productsFromDB = new ArrayList<Product>();
         String query = "SELECT * FROM products INNER JOIN suppliers ON products.supp_id=suppliers.supplier_id" +
                 " INNER JOIN categories ON products.cat_id=categories.category_id " +
                 "WHERE supp_id='" + productCategory.getId() + "';";
 
         try (Connection connection = getConnection();
-             Statement statement =connection.createStatement();
+             Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query);
-        ){
-            while (resultSet.next()){
+        ) {
+            while (resultSet.next()) {
                 Supplier supplier = new Supplier(
                         resultSet.getInt("supplier_id"),
                         resultSet.getString("supplier_name"),
