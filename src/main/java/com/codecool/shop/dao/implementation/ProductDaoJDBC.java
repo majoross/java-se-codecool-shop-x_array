@@ -79,29 +79,27 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
     @Override
     public List<Product> getAll() {
 
-        int numberOfProducts = 0;
-
+        Integer numberOfProducts = 0;
+        List<Integer> productIDs = new ArrayList<Integer>();
         List<Product> productsFromDB = new ArrayList<Product>();
 
-        String query = "SELECT Count(product_id) AS NumberOfProducts FROM products;";
-
+        //String query = "SELECT Count(product_id) AS NumberOfProducts FROM products;";
+        String query = "SELECT product_id FROM products;";
         try (Connection connection = getConnection();
              Statement statement =connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query);
         ){
-            if (resultSet.next()){
-
-                numberOfProducts = resultSet.getInt("NumberOfProducts");
-                System.out.println(numberOfProducts);
-            } else {
-                return null;
+            while (resultSet.next()){
+                numberOfProducts = resultSet.getInt("product_id");
+                productIDs.add(numberOfProducts);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        for(int i = 1; i <= numberOfProducts;i++) {
-            productsFromDB.add(find(i));
+        System.out.println(productIDs);
+        for(Integer prod : productIDs) {
+            productsFromDB.add(find(prod));
         }
 
         return productsFromDB;
