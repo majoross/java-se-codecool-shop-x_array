@@ -17,11 +17,14 @@ public class Main {
     public static void main(String[] args) {
 
         ProductDao pd = ProductDaoJDBC.getInstance();
+        ProductCategoryDao pdc = ProductCategoryDaoJDBC.getInstance();
         Supplier amazon = new Supplier(1,"Amazon", "Digital content and services");
         ProductCategory laptop = new ProductCategory(2,"Laptop", "Hardware", "A laptop, often called a notebook or notebook computer, is a small, portable personal computer with a clamshell form factor, an alphanumeric keyboard on the lower part of the clamshell and a thin LCD or LED computer screen on the upper portion, which is opened up to use the computer.");
         System.out.println(pd.getAll());
         System.out.println(pd.getBy(amazon));
         System.out.println(pd.getBy(laptop));
+        System.out.println(pdc.find(1));
+        System.out.println(pdc.getAll());
 
         // default server settings
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
