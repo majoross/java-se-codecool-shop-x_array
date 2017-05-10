@@ -27,10 +27,9 @@ public class ProductCategoryDaoJDBC extends JDBC implements ProductCategoryDao {
 
     @Override
     public void add(ProductCategory category) {
-        //add to db
         String query = "INSERT INTO categories (category_id,category_name,department,category_description)" +
                 "VALUES ('" + category.getId() + "','" + category.getName() + "','" + category.getDepartment() +
-                "','" + category.getDescription() + "',";
+                "','" + category.getDescription() + "');";
         executeQuery(query);
 
     }
@@ -91,6 +90,4 @@ public class ProductCategoryDaoJDBC extends JDBC implements ProductCategoryDao {
 
         return productCategoriesFromDB;
     }
-
-
 }

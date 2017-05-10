@@ -25,3 +25,7 @@ VALUES
   ('Iphone 7',700, 'USD', 'imagine calling your girl with an apple',3,3),
   ('Phab 2 Pro', 500, 'USD', 'buy it to be phabolous',3,2),
   ('Amazon Fire Phone', 450, 'USD', 'amazon has its own electronic devices!!!',3,1);
+
+INSERT INTO shoppingcart (cart_item_id, prod_id, quantity, subtotal_price, product_price)
+VALUES
+  (1,1,1,49.9,49.9);

@@ -47,8 +47,16 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
              ResultSet resultSet = statement.executeQuery(query);
         ){
             if (resultSet.next()){
-                ProductCategory category = new ProductCategory(resultSet.getInt("category_id"), resultSet.getString("category_name"),resultSet.getString("department"), resultSet.getString("category_description"));
-                Supplier supplier = new Supplier(resultSet.getInt("supplier_id"), resultSet.getString("supplier_name"), resultSet.getString("supplier_description"));
+                ProductCategory category = new ProductCategory(
+                        resultSet.getInt("category_id"),
+                        resultSet.getString("category_name"),
+                        resultSet.getString("department"),
+                        resultSet.getString("category_description"));
+
+                Supplier supplier = new Supplier(
+                        resultSet.getInt("supplier_id"),
+                        resultSet.getString("supplier_name"),
+                        resultSet.getString("supplier_description"));
 
                 Product result = new Product(
                         resultSet.getInt("product_id"),

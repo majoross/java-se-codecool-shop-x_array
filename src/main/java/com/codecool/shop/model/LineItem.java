@@ -10,10 +10,21 @@ public class LineItem {
     private int id;
     private Product product;
     private int quantity;
+    private float subtotalPrice;
     static private int sumOfAll;
 
 
     public LineItem(Product product, int quantity) {
+        this.product = product;
+        this.id = product.getId();
+        this.quantity = quantity;
+        this.subtotalPrice =  product.getDefaultPrice() * quantity;
+        this.sumOfAll += (int) product.getDefaultPrice() * quantity;
+
+    }
+
+    public LineItem(int id , Product product, int quantity) {
+        this.id = id;
         this.product = product;
         this.id = product.getId();
         this.quantity = quantity;
@@ -27,6 +38,12 @@ public class LineItem {
         if (quantity < 1) {
             ShoppingCartDaoMem.getInstance().remove(this);
         }
+    }
+    public float getSubtotalPrice() {
+        return this.subtotalPrice;
+    }
+    public float getProductDefaultPrice(){
+        return this.product.getDefaultPrice();
     }
 
     public String getName() {
