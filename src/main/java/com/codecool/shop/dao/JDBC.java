@@ -9,8 +9,8 @@ import java.sql.Statement;
 public abstract class JDBC {
 
     private static final String DATABASE = "jdbc:postgresql://localhost:5432/codecoolshop";
-    private static final String DB_USER = "aracz";
-    private static final String DB_PASSWORD = "Malajos12";
+    private static final String DB_USER = "adam_kovacs";
+    private static final String DB_PASSWORD = "postgres";
 
     protected Connection getConnection() throws SQLException {
         return DriverManager.getConnection(
