@@ -83,7 +83,6 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
         List<Integer> productIDs = new ArrayList<Integer>();
         List<Product> productsFromDB = new ArrayList<Product>();
 
-        //String query = "SELECT Count(product_id) AS NumberOfProducts FROM products;";
         String query = "SELECT product_id FROM products;";
         try (Connection connection = getConnection();
              Statement statement =connection.createStatement();
@@ -108,7 +107,35 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
     @Override
     public List<Product> getBy(Supplier supplier) {
         List<Product> productsFromDB = new ArrayList<Product>();
-        //gets all products objects from the db to productsFromDB arraylist by supplier
+        String query = "SELECT * FROM products INNER JOIN suppliers ON products.supp_id=suppliers.supplier_id" +
+                " INNER JOIN categories ON products.cat_id=categories.category_id " +
+                "WHERE supp_id='" + supplier.getId() + "';";
+
+        try (Connection connection = getConnection();
+             Statement statement =connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query);
+        ){
+            while (resultSet.next()){
+                ProductCategory category = new ProductCategory(
+                        resultSet.getInt("category_id"),
+                        resultSet.getString("category_name"),
+                        resultSet.getString("department"),
+                        resultSet.getString("category_description"));
+
+                Product product = new Product(
+                        resultSet.getInt("product_id"),
+                        resultSet.getString("product_name"),
+                        resultSet.getFloat("default_price"),
+                        resultSet.getString("currency_string"),
+                        resultSet.getString("product_description"),
+                        category,
+                        supplier);
+                productsFromDB.add(product);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         return productsFromDB;
     }
@@ -116,7 +143,34 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
     @Override
     public List<Product> getBy(ProductCategory productCategory) {
         List<Product> productsFromDB = new ArrayList<Product>();
-        //gets all products objects from the db to productsFromDB arraylist by productcategory
+        String query = "SELECT * FROM products INNER JOIN suppliers ON products.supp_id=suppliers.supplier_id" +
+                " INNER JOIN categories ON products.cat_id=categories.category_id " +
+                "WHERE supp_id='" + productCategory.getId() + "';";
+
+        try (Connection connection = getConnection();
+             Statement statement =connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query);
+        ){
+            while (resultSet.next()){
+                Supplier supplier = new Supplier(
+                        resultSet.getInt("supplier_id"),
+                        resultSet.getString("supplier_name"),
+                        resultSet.getString("supplier_description"));
+
+                Product product = new Product(
+                        resultSet.getInt("product_id"),
+                        resultSet.getString("product_name"),
+                        resultSet.getFloat("default_price"),
+                        resultSet.getString("currency_string"),
+                        resultSet.getString("product_description"),
+                        productCategory,
+                        supplier);
+                productsFromDB.add(product);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         return productsFromDB;
     }
