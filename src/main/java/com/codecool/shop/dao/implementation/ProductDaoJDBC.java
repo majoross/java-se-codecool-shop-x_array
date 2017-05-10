@@ -34,24 +34,27 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
 
     @Override
     public Product find(int id) {
-        Product foundProduct = new Product("", 1f, "", "",  new ProductCategory("","",""), new Supplier("",""));
 
-        String query = "SELECT * FROM products WHERE id ='" + id + "';";
+        String query = "SELECT * FROM products INNER JOIN suppliers ON products.supp_id=suppliers.supplier_id " +
+                "INNER JOIN categories ON products.cat_id=categories.category_id WHERE product_id ='" + id + "';";
 
         try (Connection connection = getConnection();
              Statement statement =connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query);
         ){
             if (resultSet.next()){
+                ProductCategory category = new ProductCategory(resultSet.getInt("category_id"), resultSet.getString("category_name"),resultSet.getString("department"), resultSet.getString("category_description"));
+                Supplier supplier = new Supplier(resultSet.getInt("supplier_id"), resultSet.getString("supplier_name"), resultSet.getString("supplier_description"));
+
                 //need to be able to set PRODUCT ID!
                 Product result = new Product(
-                        resultSet.getString("name"),
+                        resultSet.getString("product_name"),
                         //resultSet.getString("id"),
                         resultSet.getFloat("default_price"),
                         resultSet.getString("currency_string"),
-                        resultSet.getString("description"),
-                        resultSet.getString("category_id"),//should be a ProductCategory object
-                        resultSet.getString("supplier_id"));//should be a Supplier object
+                        resultSet.getString("product_description"),
+                        category,
+                        supplier);
                 return result;
             } else {
                 return null;

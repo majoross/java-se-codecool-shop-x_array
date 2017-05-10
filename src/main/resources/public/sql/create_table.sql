@@ -5,34 +5,34 @@ DROP TABLE IF EXISTS shoppingcart;
 
 CREATE TABLE suppliers
 (
-  id            SERIAL PRIMARY KEY,
+  supplier_id            SERIAL PRIMARY KEY,
   supplier_name VARCHAR(200),
-  description   VARCHAR(300)
+  supplier_description   VARCHAR(300)
 );
 
 
 CREATE TABLE categories
 (
-  id            SERIAL PRIMARY KEY,
+  category_id            SERIAL PRIMARY KEY,
   category_name VARCHAR(200),
   department    VARCHAR (200),
-  description   VARCHAR(300)
+  category_description   VARCHAR(300)
 );
 
 CREATE TABLE products
 (
-  id              SERIAL PRIMARY KEY,
+  product_id              SERIAL PRIMARY KEY,
   product_name    VARCHAR(200),
   default_price   FLOAT,
   currency_string VARCHAR(200),
-  description     VARCHAR (300),
-  category_id     INT REFERENCES categories (id),
-  supplier_id     INT REFERENCES suppliers (id)
+  product_description     VARCHAR (300),
+  cat_id     INT REFERENCES categories (category_id),
+  supp_id     INT REFERENCES suppliers (supplier_id)
 );
 
 CREATE TABLE shoppingcart
 (
-  id          SERIAL PRIMARY KEY,
-  product_id  INT REFERENCES products (id),
+  cart_id          SERIAL PRIMARY KEY,
+  prod_id  INT REFERENCES products (product_id),
   quantity    INT
 );

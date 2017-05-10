@@ -16,6 +16,9 @@ public class Main {
 
     public static void main(String[] args) {
 
+        //ProductDao pd = ProductDaoJDBC.getInstance();
+        //System.out.println(pd.find(1));
+
         // default server settings
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
         staticFileLocation("/public");
@@ -82,6 +85,8 @@ public class Main {
 
         // Add this line to your project to enable the debug screen
         enableDebugScreen();
+
+
     }
 
     public static void populateData() {
