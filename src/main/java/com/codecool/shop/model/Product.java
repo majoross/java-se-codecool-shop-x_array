@@ -18,6 +18,22 @@ public class Product extends BaseModel {
 
     }
 
+    public Product(int id, String name, float defaultPrice, String currencyString, String description, ProductCategory productCategory, Supplier supplier) {
+        super(name);
+        this.setId(id);
+        this.setDescription(description);
+        this.setPrice(defaultPrice, currencyString);
+        this.setSupplier(supplier);
+        this.setProductCategory(productCategory);
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public float getDefaultPrice() {
         return defaultPrice;
