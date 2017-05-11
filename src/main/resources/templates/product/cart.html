@@ -52,15 +52,15 @@
                     <td><b>Total Cost</b></td>
                 </tr>
                 <tr class="item" th:each="prod,iterStat : ${cart}">
-                    <td><a class="btn btn-success remove" th:href="'/cart/remove/' + ${prod.getId()}">Remove</a></td>
+                    <td><a class="btn btn-warning remove" th:href="'/cart/remove/' + ${prod.getId()}">Remove</a></td>
                     <td th:text="${prod.getProductId()}">ID</td>
                     <td><img class="group list-group-image" src="http://placehold.it/400x250/000/fff"
                              th:attr="src='/img/product_' + ${prod.getProductId()} + '.jpg'" alt=""/></td>
                     <td th:text="${prod.getName()}">name</td>
                     <td th:text="${prod.getUnitPrice()}+ ' '+ ${prod.getDefaultCurrency()}">price</td>
-                    <td class="bttn"><a class="btn btn-success" th:href="'/cart-1/' + ${prod.getId()}">-</a></td>
+                    <td class="bttn"><a class="btn btn-warning" th:href="'/cart-1/' + ${prod.getId()}">-</a></td>
                     <td class="quantity bttn" th:text="${prod.quantity}"></td>
-                    <td class="bttn"><a class="btn btn-success" th:href="'/cart1/' + ${prod.getId()}">+</a></td>
+                    <td class="bttn"><a class="btn btn-warning" th:href="'/cart1/' + ${prod.getId()}">+</a></td>
                     <td class="total cost" th:text="${prod.getTotalPrice()}+' '+ ${prod.getDefaultCurrency()}">100</td>
 
 
@@ -69,7 +69,7 @@
             <div>
                 <h3>Total amount: </h3>
                 <p th:text="${TotalPrice}">0 </p>
-                <h3><a class="btn btn-success remove">Proceed to Checkout</a></h3>
+                <h3><a class="btn btn-warning remove">Proceed to Checkout</a></h3>
             </div>
         </div>
     </div>

@@ -28,7 +28,7 @@ public class SupplierDaoJDBC extends JDBC implements SupplierDao {
     }
 
 
-    public Supplier supplierSetup(ResultSet resultSet) throws SQLException{
+    public Supplier supplierSetup(ResultSet resultSet) throws SQLException {
         Supplier supplier = new Supplier(
                 resultSet.getInt("supplier_id"),
                 resultSet.getString("supplier_name"),
@@ -48,8 +48,8 @@ public class SupplierDaoJDBC extends JDBC implements SupplierDao {
     }
 
     @Override
-    public Supplier find(int id) throws IllegalArgumentException{
-        if(id < 1){
+    public Supplier find(int id) throws IllegalArgumentException {
+        if (id < 1) {
             throw new IllegalArgumentException("Id cannot be smaller than 1");
         }
 
@@ -57,8 +57,7 @@ public class SupplierDaoJDBC extends JDBC implements SupplierDao {
 
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query))
-        {
+             ResultSet resultSet = statement.executeQuery(query)) {
 
             if (resultSet.next()) {
                 return supplierSetup(resultSet);
@@ -75,8 +74,8 @@ public class SupplierDaoJDBC extends JDBC implements SupplierDao {
 
 
     @Override
-    public void remove(int id) throws IllegalArgumentException{
-        if(id < 1) {
+    public void remove(int id) throws IllegalArgumentException {
+        if (id < 1) {
             throw new IllegalArgumentException("Id cannot be smaller than 1");
         }
 
@@ -93,8 +92,7 @@ public class SupplierDaoJDBC extends JDBC implements SupplierDao {
 
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query))
-        {
+             ResultSet resultSet = statement.executeQuery(query)) {
 
             while (resultSet.next()) {
 
