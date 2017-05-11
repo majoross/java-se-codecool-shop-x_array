@@ -5,26 +5,20 @@ import com.codecool.shop.dao.JDBC;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.ShoppingCartDao;
 import com.codecool.shop.model.LineItem;
-import com.codecool.shop.model.ProductCategory;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class ShoppingCartDaoJDBC extends JDBC implements ShoppingCartDao {
-
-    //initially there are no shopping cart instances
     private static ShoppingCartDaoJDBC instance = null;
 
-    //private constructor
     private ShoppingCartDaoJDBC() {
     }
 
-    //if there are no instances of cart, creates one
     public static ShoppingCartDaoJDBC getInstance() {
         if (instance == null) {
             instance = new ShoppingCartDaoJDBC();
@@ -32,8 +26,7 @@ public class ShoppingCartDaoJDBC extends JDBC implements ShoppingCartDao {
         return instance;
     }
 
-
-    public LineItem lineItemSetup(ResultSet resultSet) throws SQLException{
+    public LineItem lineItemSetup(ResultSet resultSet) throws SQLException {
         ProductDaoJDBC product = ProductDaoJDBC.getInstance();
 
         LineItem result = new LineItem(
@@ -61,6 +54,7 @@ public class ShoppingCartDaoJDBC extends JDBC implements ShoppingCartDao {
         executeQuery(query);
     }
 
+
     @Override
     public void remove(LineItem item) throws NullPointerException {
 
@@ -68,20 +62,16 @@ public class ShoppingCartDaoJDBC extends JDBC implements ShoppingCartDao {
         executeQuery(query);
     }
 
-    //public void review(int id) { /*redirect to Shopping cart main page*/ } dafuq is this?
 
     @Override
     public LineItem find(int id) {
-
-        //ProductDao product = ProductDaoJDBC.getInstance();
 
         String query = "SELECT * FROM shoppingcart INNER JOIN products " +
                 "ON shoppingcart.prod_id=products.product_id WHERE prod_id='" + id + "';";
 
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query))
-        {
+             ResultSet resultSet = statement.executeQuery(query)) {
 
             if (resultSet.next()) {
 
@@ -107,8 +97,7 @@ public class ShoppingCartDaoJDBC extends JDBC implements ShoppingCartDao {
         String query = "SELECT prod_id FROM shoppingcart;";
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query))
-        {
+             ResultSet resultSet = statement.executeQuery(query)) {
 
             while (resultSet.next()) {
                 numberOfItems = resultSet.getInt("prod_id");
@@ -126,21 +115,22 @@ public class ShoppingCartDaoJDBC extends JDBC implements ShoppingCartDao {
         return lineItemsFromDB;
     }
 
+
     @Override
     public LineItem getFirst() {
-        //this shit is never used, i ain't gonna implement it just for the fun. :D
         return null;
     }
 
+
     @Override
     public String getTotal() {
+
         Float totalPrice;
         String query = "SELECT SUM(subtotal_price) AS total_price FROM shoppingcart;";
 
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query))
-        {
+             ResultSet resultSet = statement.executeQuery(query)) {
 
             if (resultSet.next()) {
 
@@ -156,6 +146,7 @@ public class ShoppingCartDaoJDBC extends JDBC implements ShoppingCartDao {
 
         return null;
     }
+
 
     @Override
     public void changeAmount(LineItem item, int num) {
@@ -174,13 +165,7 @@ public class ShoppingCartDaoJDBC extends JDBC implements ShoppingCartDao {
                         + item.getProductId() + "';";
 
                 executeQuery(query);
-
             }
-
-
         }
-
     }
 }
-
-

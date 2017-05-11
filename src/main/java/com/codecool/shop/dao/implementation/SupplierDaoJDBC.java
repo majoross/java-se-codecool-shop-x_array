@@ -15,8 +15,6 @@ import java.util.List;
 public class SupplierDaoJDBC extends JDBC implements SupplierDao {
     private static SupplierDaoJDBC instance = null;
 
-    /* A private Constructor prevents any other class from instantiating.
-     */
     private SupplierDaoJDBC() {
     }
 
@@ -26,7 +24,6 @@ public class SupplierDaoJDBC extends JDBC implements SupplierDao {
         }
         return instance;
     }
-
 
     public Supplier supplierSetup(ResultSet resultSet) throws SQLException {
         Supplier supplier = new Supplier(
@@ -46,6 +43,7 @@ public class SupplierDaoJDBC extends JDBC implements SupplierDao {
                 + supplier.getDescription() + "');";
         executeQuery(query);
     }
+
 
     @Override
     public Supplier find(int id) throws IllegalArgumentException {
@@ -82,6 +80,7 @@ public class SupplierDaoJDBC extends JDBC implements SupplierDao {
         String query = "DELETE FROM suppliers WHERE supplier_id = '" + id + "';";
         executeQuery(query);
     }
+
 
     @Override
     public List<Supplier> getAll() {

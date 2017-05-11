@@ -25,8 +25,7 @@ public class ProductCategoryDaoJDBC extends JDBC implements ProductCategoryDao {
         return instance;
     }
 
-
-    public ProductCategory productCategorySetup(ResultSet resultSet) throws SQLException{
+    public ProductCategory productCategorySetup(ResultSet resultSet) throws SQLException {
         ProductCategory category = new ProductCategory(
                 resultSet.getInt("category_id"),
                 resultSet.getString("category_name"),
@@ -46,9 +45,10 @@ public class ProductCategoryDaoJDBC extends JDBC implements ProductCategoryDao {
 
     }
 
+
     @Override
-    public ProductCategory find(int id) throws IllegalArgumentException{
-        if(id < 1){
+    public ProductCategory find(int id) throws IllegalArgumentException {
+        if (id < 1) {
             throw new IllegalArgumentException("Id cannot be smaller than 1");
         }
         String query = "SELECT * FROM categories WHERE category_id = '" + id + "' ;";
@@ -75,13 +75,14 @@ public class ProductCategoryDaoJDBC extends JDBC implements ProductCategoryDao {
 
 
     @Override
-    public void remove(int id) throws IllegalArgumentException{
-        if(id < 1) {
+    public void remove(int id) throws IllegalArgumentException {
+        if (id < 1) {
             throw new IllegalArgumentException("Id cannot be smaller than 1");
         }
         String query = "DELETE FROM categories WHERE category_id = '" + id + "';";
         executeQuery(query);
     }
+
 
     @Override
     public List<ProductCategory> getAll() {

@@ -15,7 +15,7 @@ public abstract class JDBC {
 
     protected Connection getConnection() throws SQLException {
         return DriverManager.getConnection(
-                "jdbc:postgresql://"+read(1)+"/"+read(2)+"",
+                "jdbc:postgresql://" + read(1) + "/" + read(2) + "",
                 read(3),
                 read(4));
     }
@@ -24,7 +24,7 @@ public abstract class JDBC {
 
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement();
-        ){
+        ) {
             statement.executeUpdate(query);
 
         } catch (SQLException e) {
@@ -41,15 +41,15 @@ public abstract class JDBC {
             input = new FileInputStream("src/main/resources/connection.properties");
 
             prop.load(input);
-            if(paramNumber == 1) {
+            if (paramNumber == 1) {
                 return prop.getProperty("url");
-            }else if (paramNumber == 2) {
+            } else if (paramNumber == 2) {
                 return prop.getProperty("database");
-            }else if (paramNumber == 3) {
+            } else if (paramNumber == 3) {
                 return prop.getProperty("user");
-            }else if (paramNumber == 4) {
+            } else if (paramNumber == 4) {
                 return prop.getProperty("password");
-            }else{
+            } else {
                 return null;
             }
 
