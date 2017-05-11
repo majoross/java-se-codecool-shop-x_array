@@ -66,23 +66,37 @@ public class dao_tests {
     @Test
     public void productGetAllTest(){
         ProductDaoMem productDaoMem = ProductDaoMem.getInstance();
+        ProductCategory productCategory = new ProductCategory("testcategory", "hardware", "desc");
+        Supplier supplier = new Supplier("testsupplier", "description");
+        Product product = new Product("test", 20, "USD", "description", productCategory, supplier);
+        Product product1 = new Product("test1", 20, "USD", "description", productCategory, supplier);
+        productDaoMem.add(product);
+        productDaoMem.add(product1);
         List<Product> products = productDaoMem.getAll();
-        assertEquals(9, products.size());
+        assertEquals(2, products.size());
 
     }
 
     @Test
     public void supplierGetAllTest(){
         SupplierDaoMem supplierDaoMem = SupplierDaoMem.getInstance();
+        Supplier supplier = new Supplier("testsupplier", "description");
+        Supplier supplier1 = new Supplier("testsupplier1", "description");
+        supplierDaoMem.add(supplier);
+        supplierDaoMem.add(supplier1);
         List<Supplier> suppliers = supplierDaoMem.getAll();
-        assertEquals(4, suppliers.size());
+        assertEquals(2, suppliers.size());
     }
 
     @Test
     public void productCategoryGetAllTest(){
         ProductCategoryDaoMem productCategoryDaoMem = ProductCategoryDaoMem.getInstance();
+        ProductCategory productCategory = new ProductCategory("testcategory", "hardware", "desc");
+        ProductCategory productCategory1 = new ProductCategory("testcategory1", "hardware", "desc");
+        productCategoryDaoMem.add(productCategory);
+        productCategoryDaoMem.add(productCategory1);
         List<ProductCategory> productCategories = productCategoryDaoMem.getAll();
-        assertEquals(3, productCategories.size());
+        assertEquals(2, productCategories.size());
     }
 
 }
