@@ -48,11 +48,6 @@ public class Main {
         //JDBC data handling
         ProductDao productDataStore = ProductDaoJDBC.getInstance();
         ShoppingCartDaoJDBC shoppingCartDataStore = ShoppingCartDaoJDBC.getInstance();
-        System.out.println(shoppingCartDataStore.stuff(1));
-        System.out.println(shoppingCartDataStore.stuff(2));
-        System.out.println(shoppingCartDataStore.stuff(3));
-        System.out.println(shoppingCartDataStore.stuff(4));
-        System.out.println(shoppingCartDataStore.stuff(5));
 
         // default server settings
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
