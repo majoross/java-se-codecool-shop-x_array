@@ -1,12 +1,10 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.ProductCategoryDao;
+import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.ShoppingCartDao;
 import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
-import com.codecool.shop.dao.implementation.ShoppingCartDaoMem;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 import spark.ModelAndView;
@@ -17,10 +15,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ProductController {
-    private static ProductDaoMem productDataStore = ProductDaoMem.getInstance();
-    private static ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-    private static SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
-    private static ShoppingCartDao shoppingCartDataStore = ShoppingCartDaoMem.getInstance();
+
+    //DAOMEM usage
+    //    private static ProductDao productDataStore = ProductDaoMem.getInstance();
+//    private static ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+//    private static SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
+//    private static ShoppingCartDao shoppingCartDataStore = ShoppingCartDaoMem.getInstance();
+    private static ProductDao productDataStore = ProductDaoJDBC.getInstance();
+    private static ProductCategoryDao productCategoryDataStore = ProductCategoryDaoJDBC.getInstance();
+    private static SupplierDao supplierDataStore = SupplierDaoJDBC.getInstance();
+    private static ShoppingCartDao shoppingCartDataStore = ShoppingCartDaoJDBC.getInstance();
     private static ProductCategory categoryToFilter;
     private static Supplier supplierToFilter;
 
@@ -44,7 +48,7 @@ public class ProductController {
 
         Map params = new HashMap<>();
         params.put("categories", productCategoryDataStore.getAll());
-        params.put("products", categoryToFilter.getProducts());
+        params.put("products", productDataStore.getBy(categoryToFilter));
         params.put("suppliers", supplierDataStore.getAll());
         return new ModelAndView(params, "product/index");
     }
@@ -68,7 +72,6 @@ public class ProductController {
     public static ModelAndView renderCart(Request req, Response res) {
 
         Map params = new HashMap<>();
-        params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
         params.put("cart", shoppingCartDataStore.getAll());
         params.put("TotalPrice", shoppingCartDataStore.getTotal());
         return new ModelAndView(params, "product/cart");

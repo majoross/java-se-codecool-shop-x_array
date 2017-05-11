@@ -32,9 +32,9 @@
 
 <body>
 
-<div class="jumbotron text-center">
+<div class="jumbotron text-center" style="background-color: #FECD57;" >
     <h1>Codecool Shop</h1>
-    <a href="/cart"><button class=" fa fa-shopping-cart" id="cart" aria-hidden="true"></button></a>
+    <a href="/cart"><button class=" fa fa-shopping-cart fa-3 jumbotron-icon" id="cart" aria-hidden="true"></button></a>
 </div>
 
 <div class="well well-sm">
@@ -82,7 +82,7 @@
                         <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                     </div>
                     <div class="col-xs-12 col-md-6">
-                        <a class="btn btn-success" th:href="'/add/' + ${prod.id}">Add to cart</a>
+                        <a class="btn btn-warning" th:href="'/add/' + ${prod.id}">Add to cart</a>
                     </div>
                 </div>
             </div>

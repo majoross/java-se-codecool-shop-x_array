@@ -3,29 +3,36 @@ import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.ShoppingCartDao;
 import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
-import com.codecool.shop.dao.implementation.ShoppingCartDaoMem;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.model.*;
 import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
+
+import java.io.IOException;
 
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+
+        //MEM data handling
+//      ProductDao productDataStore = ProductDaoMem.getInstance();
+//      ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+//      SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
+//      ShoppingCartDao shoppingCartDataStore = ShoppingCartDaoMem.getInstance();
+//      populateData();
+
+        //JDBC data handling
+        ProductDao productDataStore = ProductDaoJDBC.getInstance();
+        ShoppingCartDaoJDBC shoppingCartDataStore = ShoppingCartDaoJDBC.getInstance();
 
         // default server settings
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
         staticFileLocation("/public");
         port(8888);
-
-        // populate some data for the memory storage
-        populateData();
 
         // Always start with more specific routes
         get("/hello", (req, res) -> "Hello World");
@@ -52,31 +59,31 @@ public class Main {
         //Add to cart
         get("/add/:id", (Request req, Response res) -> {
 
-            Product product = ProductDaoMem.getInstance().find(Integer.parseInt(req.params(":id")));
+            Product product = productDataStore.find(Integer.parseInt(req.params(":id")));
             LineItem item = new LineItem(product, 1);
-            ShoppingCartDaoMem.getInstance().add(item);
+            shoppingCartDataStore.add(item);
             res.redirect("/");
             return null;
         });
 
         get("/cart1/:id", (Request req, Response res) -> {
-            LineItem item = ShoppingCartDaoMem.getInstance().find(Integer.parseInt(req.params(":id")));
-            item.changeAmount(1);
+            LineItem item = shoppingCartDataStore.find(Integer.parseInt(req.params(":id")));
+            shoppingCartDataStore.changeAmount(item, 1);
             res.redirect("/cart");
             return null;
 
         });
 
         get("/cart-1/:id", (Request req, Response res) -> {
-            LineItem item = ShoppingCartDaoMem.getInstance().find(Integer.parseInt(req.params(":id")));
-            item.changeAmount(-1);
+            LineItem item = shoppingCartDataStore.find(Integer.parseInt(req.params(":id")));
+            shoppingCartDataStore.changeAmount(item, -1);
             res.redirect("/cart");
             return null;
         });
 
         get("/cart/remove/:id", (Request req, Response res) -> {
-            LineItem item = ShoppingCartDaoMem.getInstance().find(Integer.parseInt(req.params(":id")));
-            ShoppingCartDaoMem.getInstance().remove(item);
+            LineItem item = shoppingCartDataStore.find(Integer.parseInt(req.params(":id")));
+            shoppingCartDataStore.remove(item);
             item.setQuantity(1);
             res.redirect("/cart");
             return null;
@@ -85,6 +92,8 @@ public class Main {
 
         // Add this line to your project to enable the debug screen
         enableDebugScreen();
+
+
     }
 
     public static void populateData() {
@@ -125,6 +134,14 @@ public class Main {
         //setting up shopping cart
         ShoppingCart cart1 = new ShoppingCart();
 
+
+    }
+
+    public static void populateDataDatabase() {
+        ProductDao productDataStore = ProductDaoJDBC.getInstance();
+        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoJDBC.getInstance();
+        SupplierDao supplierDataStore = SupplierDaoJDBC.getInstance();
+        ShoppingCartDao shoppingCartDataStore = ShoppingCartDaoJDBC.getInstance();
 
     }
 

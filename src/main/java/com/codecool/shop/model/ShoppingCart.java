@@ -13,13 +13,19 @@ public class ShoppingCart {
 
     }
 
-    public int getId() { return id; }
+    public int getId() {
+        return id;
+    }
 
-    public String getStatus() { return status; }
+    public String getStatus() {
+        return status;
+    }
 
-    public void setStatus(String status) {this.status = status;}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-    public String toString(){
+    public String toString() {
         return String.format("id: %1$d, " + "status: %2$s " + this.id + this.status);
     }
 }

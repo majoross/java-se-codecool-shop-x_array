@@ -12,6 +12,14 @@ public class ProductCategory extends BaseModel {
         this.products = new ArrayList<>();
     }
 
+    public ProductCategory(int id, String name, String department, String description) {
+        super(name);
+        this.id = id;
+        this.department = department;
+        this.description = description;
+        this.products = new ArrayList<>();
+    }
+
     public String getDepartment() {
         return department;
     }
@@ -34,7 +42,7 @@ public class ProductCategory extends BaseModel {
 
     public String toString() {
         return String.format(
-                "id: %1$d," +
+                "id: %1$d, " +
                         "name: %2$s, " +
                         "department: %3$s, " +
                         "description: %4$s",

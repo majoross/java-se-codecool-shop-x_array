@@ -70,6 +70,11 @@ public class ShoppingCartDaoMem implements ShoppingCartDao {
             return "0 USD";
         }
     }
+    @Override
+    public void changeAmount(LineItem item, int num){
+
+    }
+
 
 }
 
