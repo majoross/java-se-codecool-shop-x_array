@@ -16,6 +16,7 @@ public class ProductCategory extends BaseModel {
         super(name);
         this.id = id;
         this.department = department;
+        this.description = description;
         this.products = new ArrayList<>();
     }
 
@@ -41,7 +42,7 @@ public class ProductCategory extends BaseModel {
 
     public String toString() {
         return String.format(
-                "id: %1$d," +
+                "id: %1$d, " +
                         "name: %2$s, " +
                         "department: %3$s, " +
                         "description: %4$s",
