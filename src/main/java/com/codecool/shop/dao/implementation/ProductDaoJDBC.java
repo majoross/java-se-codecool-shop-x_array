@@ -29,6 +29,42 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
         return instance;
     }
 
+
+
+    public Supplier supplierSetup(ResultSet resultSet) throws SQLException{
+        Supplier supplier = new Supplier(
+                resultSet.getInt("supplier_id"),
+                resultSet.getString("supplier_name"),
+                resultSet.getString("supplier_description"));
+
+        return supplier;
+    }
+
+    public ProductCategory productCategorySetup(ResultSet resultSet) throws SQLException{
+        ProductCategory category = new ProductCategory(
+                resultSet.getInt("category_id"),
+                resultSet.getString("category_name"),
+                resultSet.getString("department"),
+                resultSet.getString("category_description"));
+
+        return category;
+    }
+
+    public Product productSetup(ResultSet resultSet) throws SQLException{
+
+        Product result = new Product (
+                resultSet.getInt("product_id"),
+                resultSet.getString("product_name"),
+                resultSet.getFloat("default_price"),
+                resultSet.getString("currency_string"),
+                resultSet.getString("product_description"),
+                productCategorySetup(resultSet),
+                supplierSetup(resultSet));
+
+        return result;
+    }
+
+
     @Override
     public void add(Product product) {
 
@@ -38,6 +74,7 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
                 ", '" + product.getSupplier() + "');";
         executeQuery(query);
     }
+
 
     @Override
     public Product find(int id) throws IllegalArgumentException{
@@ -50,29 +87,15 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
 
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query);
-        ) {
+             ResultSet resultSet = statement.executeQuery(query)) {
+
+
             if (resultSet.next()) {
-                ProductCategory category = new ProductCategory(
-                        resultSet.getInt("category_id"),
-                        resultSet.getString("category_name"),
-                        resultSet.getString("department"),
-                        resultSet.getString("category_description"));
 
-                Supplier supplier = new Supplier(
-                        resultSet.getInt("supplier_id"),
-                        resultSet.getString("supplier_name"),
-                        resultSet.getString("supplier_description"));
+                productCategorySetup(resultSet);
+                supplierSetup(resultSet);
 
-                Product result = new Product(
-                        resultSet.getInt("product_id"),
-                        resultSet.getString("product_name"),
-                        resultSet.getFloat("default_price"),
-                        resultSet.getString("currency_string"),
-                        resultSet.getString("product_description"),
-                        category,
-                        supplier);
-                return result;
+                return productSetup(resultSet);
             } else {
                 return null;
             }
@@ -102,10 +125,11 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
         List<Product> productsFromDB = new ArrayList<Product>();
 
         String query = "SELECT product_id FROM products;";
+
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query);
-        ) {
+             ResultSet resultSet = statement.executeQuery(query)) {
+
             while (resultSet.next()) {
                 numberOfProducts = resultSet.getInt("product_id");
                 productIDs.add(numberOfProducts);
@@ -132,24 +156,12 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
 
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query);
-        ) {
-            while (resultSet.next()) {
-                ProductCategory category = new ProductCategory(
-                        resultSet.getInt("category_id"),
-                        resultSet.getString("category_name"),
-                        resultSet.getString("department"),
-                        resultSet.getString("category_description"));
+             ResultSet resultSet = statement.executeQuery(query)) {
 
-                Product product = new Product(
-                        resultSet.getInt("product_id"),
-                        resultSet.getString("product_name"),
-                        resultSet.getFloat("default_price"),
-                        resultSet.getString("currency_string"),
-                        resultSet.getString("product_description"),
-                        category,
-                        supplier);
-                productsFromDB.add(product);
+            while (resultSet.next()) {
+                productCategorySetup(resultSet);
+                productSetup(resultSet);
+                productsFromDB.add(productSetup(resultSet));
             }
 
         } catch (SQLException e) {
@@ -169,23 +181,12 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
 
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query);
-        ) {
-            while (resultSet.next()) {
-                Supplier supplier = new Supplier(
-                        resultSet.getInt("supplier_id"),
-                        resultSet.getString("supplier_name"),
-                        resultSet.getString("supplier_description"));
+             ResultSet resultSet = statement.executeQuery(query)) {
 
-                Product product = new Product(
-                        resultSet.getInt("product_id"),
-                        resultSet.getString("product_name"),
-                        resultSet.getFloat("default_price"),
-                        resultSet.getString("currency_string"),
-                        resultSet.getString("product_description"),
-                        productCategory,
-                        supplier);
-                productsFromDB.add(product);
+            while (resultSet.next()) {
+                supplierSetup(resultSet);
+                productSetup(resultSet);
+                productsFromDB.add(productSetup(resultSet));
             }
 
         } catch (SQLException e) {

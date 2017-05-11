@@ -21,14 +21,16 @@ public abstract class JDBC {
     }
 
     protected void executeQuery(String query) {
+
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement();
         ){
-            statement.execute(query);
+            statement.executeUpdate(query);
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 
     protected String read(int paramNumber) {
