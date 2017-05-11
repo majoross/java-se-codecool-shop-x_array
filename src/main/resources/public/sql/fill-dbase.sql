@@ -16,7 +16,7 @@ VALUES
 
 INSERT INTO products (product_name, default_price, currency_string, product_description, cat_id, supp_id)
 VALUES
-  ('Amazon Fire', 49.9, 'USD', 'Fantastic price. Large content ecosystem. Good parental controls.', 1, 1),
+  ('Amazon Fire', 49.9, 'USD', 'Fantastic price. Large content ecosystem.', 1, 1),
   ('Lenovo IdeaPad Miix 700',479,'USD','Keyboard cover is included. Fanless Core m5 processor.',1,2),
   ('Amazon Fire HD 8',89,'USD','Amazon''s latest Fire HD 8. Great value for media consumption.',1,1),
   ('Dell Vostro',600,'USD','Dell Vostro is a line of computers from Dell.',2,4),

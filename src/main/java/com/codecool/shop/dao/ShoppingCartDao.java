@@ -20,5 +20,7 @@ public interface ShoppingCartDao {
     List<LineItem> getAll();
 
     String getTotal();
+
+    void changeAmount(LineItem item, int num);
 }
 
