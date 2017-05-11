@@ -27,6 +27,17 @@ public class SupplierDaoJDBC extends JDBC implements SupplierDao {
         return instance;
     }
 
+
+    public Supplier supplierSetup(ResultSet resultSet) throws SQLException{
+        Supplier supplier = new Supplier(
+                resultSet.getInt("supplier_id"),
+                resultSet.getString("supplier_name"),
+                resultSet.getString("supplier_description"));
+
+        return supplier;
+    }
+
+
     @Override
     public void add(Supplier supplier) {
 
@@ -43,13 +54,11 @@ public class SupplierDaoJDBC extends JDBC implements SupplierDao {
 
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query);
-        ) {
+             ResultSet resultSet = statement.executeQuery(query))
+        {
+
             if (resultSet.next()) {
-                return new Supplier(
-                        resultSet.getInt("supplier_id"),
-                        resultSet.getString("supplier_name"),
-                        resultSet.getString("supplier_description"));
+                return supplierSetup(resultSet);
             } else {
                 return null;
             }
@@ -78,14 +87,12 @@ public class SupplierDaoJDBC extends JDBC implements SupplierDao {
 
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query);
-        ) {
+             ResultSet resultSet = statement.executeQuery(query))
+        {
+
             while (resultSet.next()) {
-                Supplier supplier = new Supplier(
-                        resultSet.getInt("supplier_id"),
-                        resultSet.getString("supplier_name"),
-                        resultSet.getString("supplier_description"));
-                suppliersFromDB.add(supplier);
+
+                suppliersFromDB.add(supplierSetup(resultSet));
             }
 
         } catch (SQLException e) {

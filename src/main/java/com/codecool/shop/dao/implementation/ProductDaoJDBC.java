@@ -29,6 +29,42 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
         return instance;
     }
 
+
+
+    public Supplier supplierSetup(ResultSet resultSet) throws SQLException{
+        Supplier supplier = new Supplier(
+                resultSet.getInt("supplier_id"),
+                resultSet.getString("supplier_name"),
+                resultSet.getString("supplier_description"));
+
+        return supplier;
+    }
+
+    public ProductCategory productCategorySetup(ResultSet resultSet) throws SQLException{
+        ProductCategory category = new ProductCategory(
+                resultSet.getInt("category_id"),
+                resultSet.getString("category_name"),
+                resultSet.getString("department"),
+                resultSet.getString("category_description"));
+
+        return category;
+    }
+
+    public Product productSetup(ResultSet resultSet) throws SQLException{
+
+        Product result = new Product (
+                resultSet.getInt("product_id"),
+                resultSet.getString("product_name"),
+                resultSet.getFloat("default_price"),
+                resultSet.getString("currency_string"),
+                resultSet.getString("product_description"),
+                productCategorySetup(resultSet),
+                supplierSetup(resultSet));
+
+        return result;
+    }
+
+
     @Override
     public void add(Product product) {
 
@@ -39,13 +75,6 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
         executeQuery(query);
     }
 
-    public ResultSet runQuery(String query) throws SQLException{
-        Connection connection = getConnection();
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(query);
-
-        return resultSet;
-    }
 
     @Override
     public Product find(int id) {
@@ -53,31 +82,17 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
         String query = "SELECT * FROM products INNER JOIN suppliers ON products.supp_id=suppliers.supplier_id " +
                 "INNER JOIN categories ON products.cat_id=categories.category_id WHERE product_id ='" + id + "';";
 
-        try {
+        try (Connection connection = getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
 
-            ResultSet resultSet = runQuery(query);
 
             if (resultSet.next()) {
-                ProductCategory category = new ProductCategory(
-                        resultSet.getInt("category_id"),
-                        resultSet.getString("category_name"),
-                        resultSet.getString("department"),
-                        resultSet.getString("category_description"));
 
-                Supplier supplier = new Supplier(
-                        resultSet.getInt("supplier_id"),
-                        resultSet.getString("supplier_name"),
-                        resultSet.getString("supplier_description"));
+                productCategorySetup(resultSet);
+                supplierSetup(resultSet);
 
-                Product result = new Product(
-                        resultSet.getInt("product_id"),
-                        resultSet.getString("product_name"),
-                        resultSet.getFloat("default_price"),
-                        resultSet.getString("currency_string"),
-                        resultSet.getString("product_description"),
-                        category,
-                        supplier);
-                return result;
+                return productSetup(resultSet);
             } else {
                 return null;
             }
@@ -104,9 +119,10 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
         List<Product> productsFromDB = new ArrayList<Product>();
 
         String query = "SELECT product_id FROM products;";
-        try {
-            
-            ResultSet resultSet = runQuery(query);
+
+        try (Connection connection = getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
 
             while (resultSet.next()) {
                 numberOfProducts = resultSet.getInt("product_id");
@@ -134,24 +150,12 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
 
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query);
-        ) {
-            while (resultSet.next()) {
-                ProductCategory category = new ProductCategory(
-                        resultSet.getInt("category_id"),
-                        resultSet.getString("category_name"),
-                        resultSet.getString("department"),
-                        resultSet.getString("category_description"));
+             ResultSet resultSet = statement.executeQuery(query)) {
 
-                Product product = new Product(
-                        resultSet.getInt("product_id"),
-                        resultSet.getString("product_name"),
-                        resultSet.getFloat("default_price"),
-                        resultSet.getString("currency_string"),
-                        resultSet.getString("product_description"),
-                        category,
-                        supplier);
-                productsFromDB.add(product);
+            while (resultSet.next()) {
+                productCategorySetup(resultSet);
+                productSetup(resultSet);
+                productsFromDB.add(productSetup(resultSet));
             }
 
         } catch (SQLException e) {
@@ -171,23 +175,12 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
 
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query);
-        ) {
-            while (resultSet.next()) {
-                Supplier supplier = new Supplier(
-                        resultSet.getInt("supplier_id"),
-                        resultSet.getString("supplier_name"),
-                        resultSet.getString("supplier_description"));
+             ResultSet resultSet = statement.executeQuery(query)) {
 
-                Product product = new Product(
-                        resultSet.getInt("product_id"),
-                        resultSet.getString("product_name"),
-                        resultSet.getFloat("default_price"),
-                        resultSet.getString("currency_string"),
-                        resultSet.getString("product_description"),
-                        productCategory,
-                        supplier);
-                productsFromDB.add(product);
+            while (resultSet.next()) {
+                supplierSetup(resultSet);
+                productSetup(resultSet);
+                productsFromDB.add(productSetup(resultSet));
             }
 
         } catch (SQLException e) {
