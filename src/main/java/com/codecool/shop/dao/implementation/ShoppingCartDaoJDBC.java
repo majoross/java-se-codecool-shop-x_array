@@ -119,6 +119,7 @@ public class ShoppingCartDaoJDBC extends JDBC implements ShoppingCartDao {
         return null;
     }
 
+    @Override
     public String getTotal() {
         Float totalPrice;
         String query = "SELECT SUM(subtotal_price) AS total_price FROM shoppingcart;";
@@ -140,4 +141,31 @@ public class ShoppingCartDaoJDBC extends JDBC implements ShoppingCartDao {
 
         return null;
     }
+
+    @Override
+    public void changeAmount(LineItem item, int num) {
+
+        ProductDao product = ProductDaoJDBC.getInstance();
+
+        if (item.getQuantity() == 1 && num == -1) {
+            remove(item);
+        } else {
+            if (num == 1) {
+                add(item);
+            } else if (num == -1) {
+
+                String query = "UPDATE shoppingcart SET quantity = quantity - 1 WHERE prod_id = '" + item.getProductId() + "';" +
+                        "UPDATE shoppingcart SET subtotal_price = product_price * quantity WHERE prod_id = '"
+                        + item.getProductId() + "';";
+
+                executeQuery(query);
+
+            }
+
+
+        }
+
+    }
 }
+
+
