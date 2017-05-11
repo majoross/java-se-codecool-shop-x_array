@@ -39,16 +39,24 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
         executeQuery(query);
     }
 
+    public ResultSet runQuery(String query) throws SQLException{
+        Connection connection = getConnection();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+
+        return resultSet;
+    }
+
     @Override
     public Product find(int id) {
 
         String query = "SELECT * FROM products INNER JOIN suppliers ON products.supp_id=suppliers.supplier_id " +
                 "INNER JOIN categories ON products.cat_id=categories.category_id WHERE product_id ='" + id + "';";
 
-        try (Connection connection = getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query);
-        ) {
+        try {
+
+            ResultSet resultSet = runQuery(query);
+
             if (resultSet.next()) {
                 ProductCategory category = new ProductCategory(
                         resultSet.getInt("category_id"),
@@ -96,10 +104,10 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
         List<Product> productsFromDB = new ArrayList<Product>();
 
         String query = "SELECT product_id FROM products;";
-        try (Connection connection = getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query);
-        ) {
+        try {
+            
+            ResultSet resultSet = runQuery(query);
+
             while (resultSet.next()) {
                 numberOfProducts = resultSet.getInt("product_id");
                 productIDs.add(numberOfProducts);
