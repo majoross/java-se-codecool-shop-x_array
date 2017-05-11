@@ -6,6 +6,7 @@ import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.ShoppingCartDao;
 import com.codecool.shop.model.LineItem;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -164,6 +165,10 @@ public class ShoppingCartDaoJDBC extends JDBC implements ShoppingCartDao {
 
 
         }
+
+    }
+    public String stuff(int paramNumber) throws IOException {
+        return read(paramNumber);
 
     }
 }

@@ -9,12 +9,14 @@ import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
+import java.io.IOException;
+
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
 //        ProductDao pd = ProductDaoJDBC.getInstance();
 //        ProductCategoryDao pdc = ProductCategoryDaoJDBC.getInstance();
@@ -45,8 +47,12 @@ public class Main {
 
         //JDBC data handling
         ProductDao productDataStore = ProductDaoJDBC.getInstance();
-        ShoppingCartDao shoppingCartDataStore = ShoppingCartDaoJDBC.getInstance();
-
+        ShoppingCartDaoJDBC shoppingCartDataStore = ShoppingCartDaoJDBC.getInstance();
+        System.out.println(shoppingCartDataStore.stuff(1));
+        System.out.println(shoppingCartDataStore.stuff(2));
+        System.out.println(shoppingCartDataStore.stuff(3));
+        System.out.println(shoppingCartDataStore.stuff(4));
+        System.out.println(shoppingCartDataStore.stuff(5));
 
         // default server settings
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
