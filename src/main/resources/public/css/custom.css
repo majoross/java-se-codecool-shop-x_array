@@ -7,7 +7,7 @@
     padding: 0px;
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
-    border-radius: 0px;
+    border-radius: 10px;
     max-height: 400px;
     max-width: 450px;
 }
@@ -118,9 +118,35 @@ img {
 }
 
 .jumbotron {
+    background-image: url("public/img/background.jpg");
+    font-weight: 900;
+    color: white;
+    border: none;
 
 }
 
 body {
     font-family: 'Roboto', sans-serif;
+    background-color: #f9f9f9;
 }
+
+.well .well-sm {
+
+    background: #f9f9f9;
+    border: none;
+}
+
+.dropbtn {
+    background-color: #EF7C2D;
+}
+
+.dropbtn:hover .dropdown .open .dropbtn:focus {
+    background-color: #F4A238;
+}
+
+.jumbotron-icon .fa-3 {
+    font-size: 4em;
+}
+
+
+

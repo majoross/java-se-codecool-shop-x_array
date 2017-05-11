@@ -120,4 +120,19 @@ p {
 
 body {
     font-family: 'Roboto', sans-serif;
+    background-color: #f9f9f9;
+}
+
+.well .well-sm {
+
+    background: #f9f9f9;
+    border: none;
+}
+
+.jumbotron {
+    background: #FECD57;
+    font-weight: 900;
+    color: white;
+    border: none;
+
 }
