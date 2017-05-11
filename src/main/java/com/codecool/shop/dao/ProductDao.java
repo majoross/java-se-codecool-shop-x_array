@@ -11,9 +11,9 @@ public interface ProductDao {
 
     void add(Product product);
 
-    Product find(int id);
+    Product find(int id) throws  IllegalArgumentException;
 
-    void remove(int id);
+    void remove(int id)throws  IllegalArgumentException;
 
     List<Product> getAll();
 
