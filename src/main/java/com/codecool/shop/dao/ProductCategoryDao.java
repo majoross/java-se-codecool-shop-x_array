@@ -8,9 +8,9 @@ public interface ProductCategoryDao {
 
     void add(ProductCategory category);
 
-    ProductCategory find(int id);
+    ProductCategory find(int id)throws IllegalArgumentException;
 
-    void remove(int id);
+    void remove(int id)throws IllegalArgumentException;
 
     List<ProductCategory> getAll();
 

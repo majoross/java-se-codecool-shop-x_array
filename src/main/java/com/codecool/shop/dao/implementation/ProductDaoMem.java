@@ -34,12 +34,18 @@ public class ProductDaoMem implements ProductDao {
     }
 
     @Override
-    public Product find(int id) {
+    public Product find(int id) throws IllegalArgumentException {
+        if(id < 1){
+            throw new IllegalArgumentException("Id cannot be lower than 1");
+        }
         return DATA.stream().filter(t -> t.getId() == id).findFirst().orElse(null);
     }
 
     @Override
-    public void remove(int id) {
+    public void remove(int id)throws IllegalArgumentException {
+        if(id < 1){
+            throw new IllegalArgumentException("Id cannot be lower than 1");
+        }
         DATA.remove(find(id));
     }
 
