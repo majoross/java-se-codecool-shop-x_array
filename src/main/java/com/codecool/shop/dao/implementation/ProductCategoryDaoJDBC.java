@@ -35,7 +35,10 @@ public class ProductCategoryDaoJDBC extends JDBC implements ProductCategoryDao {
     }
 
     @Override
-    public ProductCategory find(int id) {
+    public ProductCategory find(int id) throws IllegalArgumentException{
+        if(id < 1){
+            throw new IllegalArgumentException("Id cannot be smaller than 1");
+        }
         String query = "SELECT * FROM categories WHERE category_id = '" + id + "' ;";
 
         try (Connection connection = getConnection();
@@ -61,7 +64,10 @@ public class ProductCategoryDaoJDBC extends JDBC implements ProductCategoryDao {
 
 
     @Override
-    public void remove(int id) {
+    public void remove(int id) throws IllegalArgumentException{
+        if(id < 1) {
+            throw new IllegalArgumentException("Id cannot be smaller than 1");
+        }
         String query = "DELETE FROM categories WHERE category_id = '" + id + "';";
         executeQuery(query);
     }

@@ -37,7 +37,10 @@ public class SupplierDaoJDBC extends JDBC implements SupplierDao {
     }
 
     @Override
-    public Supplier find(int id) {
+    public Supplier find(int id) throws IllegalArgumentException{
+        if(id < 1){
+            throw new IllegalArgumentException("Id cannot be smaller than 1");
+        }
 
         String query = "SELECT * FROM suppliers WHERE supplier_id = '" + id + "' ;";
 
@@ -63,7 +66,10 @@ public class SupplierDaoJDBC extends JDBC implements SupplierDao {
 
 
     @Override
-    public void remove(int id) {
+    public void remove(int id) throws IllegalArgumentException{
+        if(id < 1) {
+            throw new IllegalArgumentException("Id cannot be smaller than 1");
+        }
 
         String query = "DELETE FROM suppliers WHERE supplier_id = '" + id + "';";
         executeQuery(query);

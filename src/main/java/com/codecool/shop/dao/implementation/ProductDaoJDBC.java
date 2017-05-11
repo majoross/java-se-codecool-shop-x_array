@@ -40,7 +40,10 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
     }
 
     @Override
-    public Product find(int id) {
+    public Product find(int id) throws IllegalArgumentException{
+        if(id<1){
+            throw new IllegalArgumentException("id cannot be lower than 1");
+        }
 
         String query = "SELECT * FROM products INNER JOIN suppliers ON products.supp_id=suppliers.supplier_id " +
                 "INNER JOIN categories ON products.cat_id=categories.category_id WHERE product_id ='" + id + "';";
@@ -82,7 +85,10 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
     }
 
     @Override
-    public void remove(int id) {
+    public void remove(int id) throws IllegalArgumentException{
+        if(id < 1){
+            throw new IllegalArgumentException("Id cannot be smaller than 1");
+        }
 
         String query = "DELETE FROM products WHERE product_id = '" + id + "';";
         executeQuery(query);
