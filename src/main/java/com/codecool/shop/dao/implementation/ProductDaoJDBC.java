@@ -159,7 +159,7 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
         List<Product> productsFromDB = new ArrayList<Product>();
         String query = "SELECT * FROM products INNER JOIN suppliers ON products.supp_id=suppliers.supplier_id" +
                 " INNER JOIN categories ON products.cat_id=categories.category_id " +
-                "WHERE supp_id='" + productCategory.getId() + "';";
+                "WHERE cat_id='" + productCategory.getId() + "';";
 
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement();
