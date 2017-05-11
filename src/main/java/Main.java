@@ -90,7 +90,7 @@ public class Main {
 
         get("/cart1/:id", (Request req, Response res) -> {
             LineItem item = shoppingCartDataStore.find(Integer.parseInt(req.params(":id")));
-            item.changeAmount(1);
+            shoppingCartDataStore.changeAmount(1);
             res.redirect("/cart");
             return null;
 
@@ -98,7 +98,7 @@ public class Main {
 
         get("/cart-1/:id", (Request req, Response res) -> {
             LineItem item = shoppingCartDataStore.find(Integer.parseInt(req.params(":id")));
-            item.changeAmount(-1);
+            shoppingCartDataStore.changeAmount(-1);
             res.redirect("/cart");
             return null;
         });
