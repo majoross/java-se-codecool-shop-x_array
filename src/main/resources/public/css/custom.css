@@ -140,13 +140,6 @@ body {
     background-color: #EF7C2D;
 }
 
-.dropbtn:hover .dropdown .open .dropbtn:focus {
+.dropbtn:hover, .dropdown, .open, .dropbtn:focus {
     background-color: #F4A238;
 }
-
-.jumbotron-icon .fa-3 {
-    font-size: 4em;
-}
-
-
-
