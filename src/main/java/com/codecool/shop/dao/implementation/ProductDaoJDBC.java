@@ -16,8 +16,6 @@ import java.util.List;
 public class ProductDaoJDBC extends JDBC implements ProductDao {
     private static ProductDaoJDBC instance = null;
 
-    /* A private Constructor prevents any other class from instantiating.
-     */
     private ProductDaoJDBC() {
     }
 
@@ -29,9 +27,7 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
         return instance;
     }
 
-
-
-    public Supplier supplierSetup(ResultSet resultSet) throws SQLException{
+    public Supplier supplierSetup(ResultSet resultSet) throws SQLException {
         Supplier supplier = new Supplier(
                 resultSet.getInt("supplier_id"),
                 resultSet.getString("supplier_name"),
@@ -40,7 +36,7 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
         return supplier;
     }
 
-    public ProductCategory productCategorySetup(ResultSet resultSet) throws SQLException{
+    public ProductCategory productCategorySetup(ResultSet resultSet) throws SQLException {
         ProductCategory category = new ProductCategory(
                 resultSet.getInt("category_id"),
                 resultSet.getString("category_name"),
@@ -50,9 +46,9 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
         return category;
     }
 
-    public Product productSetup(ResultSet resultSet) throws SQLException{
+    public Product productSetup(ResultSet resultSet) throws SQLException {
 
-        Product result = new Product (
+        Product result = new Product(
                 resultSet.getInt("product_id"),
                 resultSet.getString("product_name"),
                 resultSet.getFloat("default_price"),
@@ -77,8 +73,8 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
 
 
     @Override
-    public Product find(int id) throws IllegalArgumentException{
-        if(id<1){
+    public Product find(int id) throws IllegalArgumentException {
+        if (id < 1) {
             throw new IllegalArgumentException("id cannot be lower than 1");
         }
 
@@ -107,15 +103,17 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
         return null;
     }
 
+
     @Override
-    public void remove(int id) throws IllegalArgumentException{
-        if(id < 1){
+    public void remove(int id) throws IllegalArgumentException {
+        if (id < 1) {
             throw new IllegalArgumentException("Id cannot be smaller than 1");
         }
 
         String query = "DELETE FROM products WHERE product_id = '" + id + "';";
         executeQuery(query);
     }
+
 
     @Override
     public List<Product> getAll() {
@@ -138,13 +136,13 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println(productIDs);
         for (Integer prod : productIDs) {
             productsFromDB.add(find(prod));
         }
 
         return productsFromDB;
     }
+
 
     @Override
     public List<Product> getBy(Supplier supplier) {
@@ -171,6 +169,7 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
         return productsFromDB;
     }
 
+
     @Override
     public List<Product> getBy(ProductCategory productCategory) {
 
@@ -195,5 +194,4 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
 
         return productsFromDB;
     }
-
 }

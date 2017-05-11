@@ -11,60 +11,57 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-/**
- * Created by majoross on 2017.05.11..
- */
 public class dao_tests {
     @Test
-    public void invalidProductFindParameter() throws IllegalArgumentException{
+    public void invalidProductFindParameter() throws IllegalArgumentException {
         ProductDaoMem productDaoMem = ProductDaoMem.getInstance();
-        assertThrows(IllegalArgumentException.class, ()-> {
+        assertThrows(IllegalArgumentException.class, () -> {
             productDaoMem.find(-1);
         });
     }
 
     @Test
-    public void invalidSupplierFindParameter() throws  IllegalArgumentException{
+    public void invalidSupplierFindParameter() throws IllegalArgumentException {
         SupplierDaoMem supplierDaoMem = SupplierDaoMem.getInstance();
-        assertThrows(IllegalArgumentException.class, ()-> {
+        assertThrows(IllegalArgumentException.class, () -> {
             supplierDaoMem.find(-1);
         });
     }
 
     @Test
-    public void invalidProductCategoryFindParameter() throws IllegalArgumentException{
+    public void invalidProductCategoryFindParameter() throws IllegalArgumentException {
         ProductCategoryDaoMem productCategoryDaoMem = ProductCategoryDaoMem.getInstance();
-        assertThrows(IllegalArgumentException.class, ()-> {
+        assertThrows(IllegalArgumentException.class, () -> {
             productCategoryDaoMem.find(-1);
         });
     }
 
     @Test
-    public void invalidProductRemoveParameter() throws IllegalArgumentException{
+    public void invalidProductRemoveParameter() throws IllegalArgumentException {
         ProductDaoMem productDaoMem = ProductDaoMem.getInstance();
-        assertThrows(IllegalArgumentException.class, ()-> {
+        assertThrows(IllegalArgumentException.class, () -> {
             productDaoMem.remove(-1);
         });
     }
 
     @Test
-    public void invalidSupplierRemoveParameter() throws  IllegalArgumentException{
+    public void invalidSupplierRemoveParameter() throws IllegalArgumentException {
         SupplierDaoMem supplierDaoMem = SupplierDaoMem.getInstance();
-        assertThrows(IllegalArgumentException.class, ()-> {
+        assertThrows(IllegalArgumentException.class, () -> {
             supplierDaoMem.remove(-1);
         });
     }
 
     @Test
-    public void invalidProductCategoryRemoveParameter() throws IllegalArgumentException{
+    public void invalidProductCategoryRemoveParameter() throws IllegalArgumentException {
         ProductCategoryDaoMem productCategoryDaoMem = ProductCategoryDaoMem.getInstance();
-        assertThrows(IllegalArgumentException.class, ()-> {
+        assertThrows(IllegalArgumentException.class, () -> {
             productCategoryDaoMem.remove(-1);
         });
     }
 
     @Test
-    public void productGetAllTest(){
+    public void productGetAllTest() {
         ProductDaoMem productDaoMem = ProductDaoMem.getInstance();
         ProductCategory productCategory = new ProductCategory("testcategory", "hardware", "desc");
         Supplier supplier = new Supplier("testsupplier", "description");
@@ -78,7 +75,7 @@ public class dao_tests {
     }
 
     @Test
-    public void supplierGetAllTest(){
+    public void supplierGetAllTest() {
         SupplierDaoMem supplierDaoMem = SupplierDaoMem.getInstance();
         Supplier supplier = new Supplier("testsupplier", "description");
         Supplier supplier1 = new Supplier("testsupplier1", "description");
@@ -89,7 +86,7 @@ public class dao_tests {
     }
 
     @Test
-    public void productCategoryGetAllTest(){
+    public void productCategoryGetAllTest() {
         ProductCategoryDaoMem productCategoryDaoMem = ProductCategoryDaoMem.getInstance();
         ProductCategory productCategory = new ProductCategory("testcategory", "hardware", "desc");
         ProductCategory productCategory1 = new ProductCategory("testcategory1", "hardware", "desc");
@@ -98,5 +95,4 @@ public class dao_tests {
         List<ProductCategory> productCategories = productCategoryDaoMem.getAll();
         assertEquals(2, productCategories.size());
     }
-
 }

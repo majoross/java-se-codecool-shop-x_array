@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ProductController {
+
+    //DAOMEM usage
     //    private static ProductDao productDataStore = ProductDaoMem.getInstance();
 //    private static ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
 //    private static SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
@@ -70,7 +72,6 @@ public class ProductController {
     public static ModelAndView renderCart(Request req, Response res) {
 
         Map params = new HashMap<>();
-        params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
         params.put("cart", shoppingCartDataStore.getAll());
         params.put("TotalPrice", shoppingCartDataStore.getTotal());
         return new ModelAndView(params, "product/cart");
