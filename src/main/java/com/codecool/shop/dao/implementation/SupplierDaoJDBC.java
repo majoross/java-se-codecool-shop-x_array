@@ -93,6 +93,7 @@ public class SupplierDaoJDBC extends JDBC implements SupplierDao {
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
 
+
             while (resultSet.next()) {
 
                 suppliersFromDB.add(supplierSetup(resultSet));

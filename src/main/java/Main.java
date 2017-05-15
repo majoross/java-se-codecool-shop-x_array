@@ -28,6 +28,9 @@ public class Main {
         //JDBC data handling
         ProductDao productDataStore = ProductDaoJDBC.getInstance();
         ShoppingCartDaoJDBC shoppingCartDataStore = ShoppingCartDaoJDBC.getInstance();
+        ProductCategory tablet = new ProductCategory(1,"Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
+        Supplier amazon = new Supplier(1, "Amazon", "Digital content and services");
+        productDataStore.add(new Product(10,"Amazon Fire 2000", 49.9f, "USD", "Fantastic price. Good parental controls.", tablet, amazon));
 
         // default server settings
         exception(Exception.class, (e, req, res) -> e.printStackTrace());

@@ -66,8 +66,8 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
 
         String query = "INSERT INTO products (product_id, product_name, default_price, currency_string, product_description, cat_id, supp_id)"
                 + "VALUES ('" + product.getId() + "', '" + product.getName() + "', '" + product.getDefaultPrice() + "', " +
-                "'" + product.getDefaultCurrency() + "', '" + product.getDescription() + "', '" + product.getProductCategory() + "'" +
-                ", '" + product.getSupplier() + "');";
+                "'" + product.getDefaultCurrency() + "', '" + product.getDescription() + "', '" + product.getProductCategory().getId() + "'" +
+                ", '" + product.getSupplier().getId() + "');";
         executeQuery(query);
     }
 
