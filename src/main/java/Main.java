@@ -8,6 +8,8 @@ import com.codecool.shop.model.*;
 import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -16,7 +18,11 @@ import static spark.debug.DebugScreen.enableDebugScreen;
 
 public class Main {
 
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+
     public static void main(String[] args) throws IOException {
+        logger.info("Setting up website!");
+
 
         //MEM data handling
 //      ProductDao productDataStore = ProductDaoMem.getInstance();
@@ -42,14 +48,17 @@ public class Main {
 
         // Equivalent with above
         get("/index", (Request req, Response res) -> {
+            logger.info("Loading homepage!");
             return new ThymeleafTemplateEngine().render(ProductController.renderProducts(req, res));
         });
 
         get("/supplier/:name", (Request req, Response res) -> {
+            logger.info("Filtering by supplier");
             return new ThymeleafTemplateEngine().render(ProductController.renderProductsFilteredBySupplier(req, res));
         });
 
         get("/category/:name", (Request req, Response res) -> {
+            logger.info("Filtering by category!");
             return new ThymeleafTemplateEngine().render(ProductController.renderProductsFilteredByCategory(req, res));
         });
 
@@ -97,6 +106,7 @@ public class Main {
     }
 
     public static void populateData() {
+        logger.info("Creating products");
 
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
@@ -138,6 +148,7 @@ public class Main {
     }
 
     public static void populateDataDatabase() {
+        logger.info("database populated");
         ProductDao productDataStore = ProductDaoJDBC.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoJDBC.getInstance();
         SupplierDao supplierDataStore = SupplierDaoJDBC.getInstance();

@@ -5,6 +5,8 @@ import com.codecool.shop.dao.JDBC;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.ShoppingCartDao;
 import com.codecool.shop.model.LineItem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -15,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ShoppingCartDaoJDBC extends JDBC implements ShoppingCartDao {
+    private static final Logger logger = LoggerFactory.getLogger(ShoppingCartDaoJDBC.class);
     private static ShoppingCartDaoJDBC instance = null;
 
     private ShoppingCartDaoJDBC() {
@@ -28,6 +31,7 @@ public class ShoppingCartDaoJDBC extends JDBC implements ShoppingCartDao {
     }
 
     public LineItem lineItemSetup(ResultSet resultSet) throws SQLException {
+        logger.info("Setting Products!");
         ProductDaoJDBC product = ProductDaoJDBC.getInstance();
 
         LineItem result = new LineItem(
@@ -41,6 +45,7 @@ public class ShoppingCartDaoJDBC extends JDBC implements ShoppingCartDao {
 
     @Override
     public void add(LineItem item) {
+        logger.info("Product added to the cart!");
 
         String query;
         if (find(item.getProductId()) == null) {
@@ -58,6 +63,7 @@ public class ShoppingCartDaoJDBC extends JDBC implements ShoppingCartDao {
 
     @Override
     public void remove(LineItem item) throws NullPointerException {
+        logger.info("Item removed from the cart!");
 
         String query = "DELETE FROM shoppingcart WHERE prod_id = '" + item.getProductId() + "';";
         executeQuery(query);
@@ -66,6 +72,7 @@ public class ShoppingCartDaoJDBC extends JDBC implements ShoppingCartDao {
 
     @Override
     public LineItem find(int id) {
+        logger.info("Searching for the item in the database!");
 
         String query = "SELECT * FROM shoppingcart INNER JOIN products " +
                 "ON shoppingcart.prod_id=products.product_id WHERE prod_id='" + id + "';";
@@ -90,6 +97,7 @@ public class ShoppingCartDaoJDBC extends JDBC implements ShoppingCartDao {
 
     @Override
     public List<LineItem> getAll() {
+        logger.info("Getting all the products!");
 
         Integer numberOfItems = 0;
         List<Integer> productIDs = new ArrayList<Integer>();

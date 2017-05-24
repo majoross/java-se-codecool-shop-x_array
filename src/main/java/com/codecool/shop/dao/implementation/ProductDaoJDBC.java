@@ -5,6 +5,8 @@ import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -14,12 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDaoJDBC extends JDBC implements ProductDao {
+    private static final Logger logger = LoggerFactory.getLogger(ProductDaoJDBC.class);
     private static ProductDaoJDBC instance = null;
 
     private ProductDaoJDBC() {
     }
 
     public static ProductDaoJDBC getInstance() {
+        logger.info("product instance was made!");
 
         if (instance == null) {
             instance = new ProductDaoJDBC();
@@ -47,6 +51,7 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
     }
 
     public Product productSetup(ResultSet resultSet) throws SQLException {
+        logger.info("Setting up Products!");
 
         Product result = new Product(
                 resultSet.getInt("product_id"),
@@ -63,6 +68,7 @@ public class ProductDaoJDBC extends JDBC implements ProductDao {
 
     @Override
     public void add(Product product) {
+        logger.info("Inserting into products table");
 
         String query = "INSERT INTO products (product_id, product_name, default_price, currency_string, product_description, cat_id, supp_id)"
                 + "VALUES ('" + product.getId() + "', '" + product.getName() + "', '" + product.getDefaultPrice() + "', " +
